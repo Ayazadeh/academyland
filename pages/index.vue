@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="text-center">
+        <ThemeSelector />
         <h1>page</h1>
         <button class="btn btn-secondary">
             Secondary
