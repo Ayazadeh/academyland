@@ -8,27 +8,30 @@
 		</button>
         <br>
         x: {{ x }}
+
+        <div class="box bg-red-400 size-4"></div>
+        <div class="box bg-green-400 size-4"></div>
 	</div>
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { BeakerIcon } from "@heroicons/vue/24/solid";
+import { useMouse } from "@vueuse/core";
+import { gsap } from "gsap";
 
 definePageMeta({
 	layout: "custom",
 });
 
-import { useLocalStorage, useMouse, usePreferredDark } from "@vueuse/core";
-
 // tracks mouse position
 const { x, y } = useMouse();
 
-// is user prefers dark theme
-const isDark = usePreferredDark();
-
-// persist state in localStorage
-const store = useLocalStorage("my-storage", {
-	name: "Apple",
-	color: "red",
+onMounted(() => {
+	gsap.to(".box", {
+        rotation: 27,
+		x: 100,
+		duration: 2,
+	});
 });
 </script>
