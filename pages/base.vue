@@ -17,6 +17,8 @@
         <AppButton @click="showMessage" :variant="ButtonVariantEnum.SECONDARY">
             show toast
         </AppButton>
+        <AppTextInput v-model="title" name="title" label="title" />
+        {{ title }}
     </div>
 </template>
 
@@ -30,4 +32,6 @@ const { showToast } = useToast()
 const showMessage = () => {
     showToast({ message: 'با موفقیت انجام شد', type: ToastEnum.SUCCESS })
 }
+
+const title = ref('')
 </script>
