@@ -10,6 +10,7 @@
         translate-x-1/2
         p-3
         rounded-md
+        text-center
         "
         :class="`bg-${toastRef.type} text-white`"
     >
