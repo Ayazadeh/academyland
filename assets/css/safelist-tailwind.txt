@@ -5,3 +5,7 @@ btn-accent
 btn-info
 btn-warning
 btn-secondary
+bg-info
+bg-success
+bg-warning
+bg-error

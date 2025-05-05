@@ -9,3 +9,11 @@ export enum ButtonVariantEnum {
     GHOST = "ghost",
     LINK = "link",
 }
+
+export enum ToastEnum {
+    INFO = "info",
+    SUCCESS = "success",
+    WARNING = "warning",
+    ERROR = "error",
+}
+

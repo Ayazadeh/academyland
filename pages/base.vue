@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col space-y-3 justify-center items-center text-center h-screen">
+    <div class="flex flex-col space-y-3 justify-center items-center text-center">
         <h1>my base component</h1>
         <AppModal v-model="isModalOpen">
             <div>
@@ -14,12 +14,20 @@
         >
             <span>دکمه</span>
         </AppButton>
+        <AppButton @click="showMessage" :variant="ButtonVariantEnum.SECONDARY">
+            show toast
+        </AppButton>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { ButtonVariantEnum } from "@/types";
+import { ButtonVariantEnum, ToastEnum } from "@/types";
 
 const isModalOpen = ref(false);
+
+const { showToast } = useToast()
+const showMessage = () => {
+    showToast({ message: 'با موفقیت انجام شد', type: ToastEnum.SUCCESS })
+}
 </script>
