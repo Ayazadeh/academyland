@@ -1,3 +1,4 @@
+btn-primary
 btn-error
 btn-success
 btn-accent

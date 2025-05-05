@@ -1,18 +1,19 @@
 <template>
-    <button :class="[`btn btn-soft btn-${variant}`]">
+    <button :class="{ [`btn btn-soft btn-${variant}`]: variant !== undefined }">
         <span v-if="loading" class="loading loading-spinner"></span>
         <slot></slot>
     </button>
 </template>
 
 <script setup lang="ts">
+import { ButtonVariantEnum } from "@/types"
+
 interface Props {
-    variant?: "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"
-    loading?: boolean
+    variant?: ButtonVariantEnum;
+    loading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    variant: "primary",
     loading: false
 })
 </script>
