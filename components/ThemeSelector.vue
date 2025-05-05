@@ -8,9 +8,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { themeChange } from 'theme-change'
-
 const themes = [
     'light',
     'dark',
@@ -48,8 +45,4 @@ const themes = [
     'abyss',
     'silk'
 ]
-
-onMounted(() => {
-    themeChange(false)
-})
 </script>

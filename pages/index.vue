@@ -20,7 +20,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from "vue";
 import { BeakerIcon } from "@heroicons/vue/24/solid";
 import { useMouse } from "@vueuse/core";
@@ -43,7 +43,7 @@ onMounted(() => {
 });
 
 // Validation, or use `yup` or `zod`
-function required(value) {
+function required(value: string) {
 	return value ? true : "This field is required";
 }
 
