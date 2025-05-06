@@ -3,4 +3,10 @@
     themes: all;
 }
 
-@source 'safelist-tailwind.txt'
+@source 'safelist-tailwind.txt';
+
+body {
+    direction: rtl;
+    @apply bg-gray-50 text-justify;
+    @apply text-gray-600;
+}
