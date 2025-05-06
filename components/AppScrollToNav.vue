@@ -8,6 +8,7 @@
         <template #item="{ label, id, index }">
             <div 
                 role="button"
+                class="cursor-pointer"
                 :class="{ 'text-primary': index === activeItemIndex }"
                 @click="scrollToID(id)"
             >
@@ -83,6 +84,6 @@ watch(y, () => {
 })
 
 const activeItemIndex = computed(() => {
-    return props.items.findIndex(item => item.id === unref(activeHash)); 
+    return props.items.findIndex(item => '#' + item.id === unref(activeHash)); 
 })
 </script>

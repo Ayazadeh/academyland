@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col space-y-3 justify-center items-center">
-        <div class="sticky top-0 bg-white py-4 z-10">
-            <AppScrollToNav :items="CourseTabs"></AppScrollToNav>
+    <div class="flex flex-col space-y-10 justify-center items-center">
+        <div class="sticky top-0 bg-blue-100 py-4 z-10">
+            <AppScrollToNav :items="CourseTabs" />
         </div>
         <template v-for="item in CourseTabs" :key="`course-item-${item.id}`">
             <div class="h-96">
