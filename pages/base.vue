@@ -19,11 +19,17 @@
         </AppButton>
         <AppTextInput v-model="title" name="title" label="title" />
         {{ title }}
+
+        <div class="py-5 min-h-[12rem]">
+            <AppCollapse>
+                <template #title>title of collapse</template>
+                <h2>content of collapse</h2>
+            </AppCollapse>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { ButtonVariantEnum, ToastEnum } from "@/types";
 
 const isModalOpen = ref(false);
