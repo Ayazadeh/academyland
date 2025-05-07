@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch, watchEffect } from "vue";
 import { useField } from "vee-validate";
 
 const props = withDefaults(

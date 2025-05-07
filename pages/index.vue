@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { BeakerIcon } from "@heroicons/vue/24/solid";
 import { useMouse } from "@vueuse/core";
 import { gsap } from "gsap";
