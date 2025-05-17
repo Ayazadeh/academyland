@@ -26,6 +26,26 @@
                 <h2>content of collapse</h2>
             </AppCollapse>
         </div>
+
+        <h2>menu</h2>
+        <div class="relative">
+            <button
+                @click="openMenu"
+                class="btn btn-primary no-animation"
+            >
+                open menu
+            </button>
+            <div class="bg-orange-200">
+                <div
+                    ref="target"
+                    class="absolute top-14 inset-x-0 h-0 invisible rounded-box opacity-0 z-30 bg-white"
+                >
+                    <ul class="p-4 space-y-1">
+                        <li v-for="i in 3">item {{ i }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -40,4 +60,6 @@ const showMessage = () => {
 }
 
 const textInput = ref('')
+
+const { target, openMenu } = useMenu();
 </script>
