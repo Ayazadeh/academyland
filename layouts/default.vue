@@ -1,7 +1,9 @@
 <template>
     <div>
         <h1>default</h1>
-        <slot />
+        <main class="my-10">
+            <slot />
+        </main>
         <footer>footer from default layout</footer>
     </div>
 </template>
