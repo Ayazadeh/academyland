@@ -17,8 +17,8 @@
         <AppButton @click="showMessage" :variant="ButtonVariantEnum.SECONDARY">
             show toast
         </AppButton>
-        <AppTextInput v-model="title" name="title" label="title" />
-        {{ title }}
+        <AppTextInput v-model="textInput" name="textInput" label="title" />
+        {{ textInput }}
 
         <div class="py-5 min-h-[12rem]">
             <AppCollapse>
@@ -39,5 +39,5 @@ const showMessage = () => {
     showToast({ message: 'با موفقیت انجام شد', type: ToastEnum.SUCCESS })
 }
 
-const title = ref('')
+const textInput = ref('')
 </script>
