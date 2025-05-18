@@ -28,11 +28,24 @@
 			</section>
 		</div>
 		<section
-			class="layout-padding flex flex-col space-y-4 pt-4 lg:pt-0 lg:space-y-0 w-full lg:w-auto lg:flex-row justify-center items-center"
+			class="
+			layout-padding 
+			flex 
+			flex-col 
+			space-y-4 
+			pt-4 
+			w-full 
+			justify-center 
+			items-center
+			lg:pt-0
+			lg:w-auto 
+			lg:flex-row 
+			lg:space-y-0 
+			"
 		>
 			<Service
 				title="پروژه‌های عملی"
-				description="آموزش پروژه محور و انتقال تجربه عملی مهمترین وجه آموزش‌های ماست"
+				description="آموزش پروژه محور و انتقال تجربه عملی"
 			>
 				<template #icon>
 					<CodeBracketIcon />

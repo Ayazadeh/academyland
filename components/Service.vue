@@ -9,7 +9,6 @@
         lg:shadow
         lg:max-w-[20rem]
         rounded-box
-        space-x-reverse 
         space-x-5
         p-4
         "
