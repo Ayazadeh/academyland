@@ -9,18 +9,17 @@
         lg:shadow
         lg:max-w-[20rem]
         rounded-box
-        space-x-5
-        p-4
+        p-3
         "
     >
-        <div class="w-16 h-16 text-secondary">
+        <div class="min-w-16 min-h-16 flex-shrink-0 text-secondary p-1">
             <slot name="icon" />
         </div>
-        <div class="space-y-2">
+        <div class="space-y-2 flex-grow p-1">
             <h6 class="font-bold block prose-sm">
                 {{ title }}
             </h6>
-            <p class="block text-justify prose-sm">
+            <p class="block text-justify prose-sm break-words">
                 {{ description }}
             </p>
         </div>

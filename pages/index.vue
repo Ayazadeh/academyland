@@ -29,18 +29,14 @@
 		</div>
 		<section
 			class="
-			layout-padding 
-			flex 
-			flex-col 
-			space-y-4 
-			pt-4 
-			w-full 
-			justify-center 
-			items-center
-			lg:pt-0
-			lg:w-auto 
-			lg:flex-row 
-			lg:space-y-0 
+			relative
+			z-50
+			grid
+			lg:-mt-16
+			lg:grid-cols-3
+			gap-5
+			max-w-5xl
+			mx-auto
 			"
 		>
 			<Service
@@ -68,8 +64,8 @@
 				</template>
 			</Service>
 		</section>
-
-		<h6 id="featured-courses" class="head text-center">دوره های آکادمی لند</h6>
+		
+		<h6 id="featured-courses" class="head text-center mt-10">دوره های آکادمی لند</h6>
 		<div v-if="pending">Loading...</div>
 		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
@@ -124,7 +120,7 @@ const { data, pending } = useCourseList();
 	@apply invisible;
 }
 .home-header {
-	background-image: url('~/assets/images/header.jpg');
+	background-image: url('@/assets/images/header.jpg');
 	background-size: 100% 100%;
 }
 </style>
