@@ -57,7 +57,8 @@
 		</section>
 
 		<h6 id="featured-courses" class="head text-center">دوره های آکادمی لند</h6>
-		<section class="my-3 lg:mt-0 lg:mx-10">
+		<div v-if="pending">Loading...</div>
+		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
 				<template #item="item">
 					<div>{{ item.title }}</div>
@@ -68,10 +69,10 @@
 </template>
 
 <script setup lang="ts">
-import { useFetchApi } from '~/composables/api/useFetchApi'
 import { AcademicCapIcon, BeakerIcon, CodeBracketIcon } from '@heroicons/vue/24/outline'
 import { gsap } from 'gsap'
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
+import { useCourseList } from '~/composables/course/useCourse';
 
 const completeAnimation = ref(false);
 
@@ -99,12 +100,7 @@ const clickGetStart = () => {
 		}
 	})
 }
-
-const $fetch = useFetchApi();
-const { data }: { data: Ref<any[]> } = await useLazyAsyncData(
-  'courses',
-  () => $fetch('/course/index')
-)
+const { data, pending } = useCourseList();
 </script>
 
 <style scoped lang="postcss">
