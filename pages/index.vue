@@ -70,7 +70,7 @@
 		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
 				<template #item="item">
-					<div>{{ item.title }}</div>
+					<CourseItem :item="item" />
 				</template>
 			</AppSlider>
 		</section>
