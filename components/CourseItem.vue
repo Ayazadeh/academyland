@@ -4,8 +4,8 @@
 		class="group cursor-pointer block"
 		:class="{ 'w-[19rem] lg:w-[22rem]': hasDefaultWidth }"
 	>
-		<div class="card border bg-accent text-accent-content">
-			<div class="aspect-w-40 aspect-h-21 bg-gray-100 shadow-sm border-b relative">
+		<div class="card border-1 border-black/10 bg-accent text-accent-content">
+			<div class="aspect-auto bg-gray-100 shadow-sm border-b relative">
 				<div class="absolute inset-x-2 top-2" v-if="item.percent">
 					<div class="t-row justify-between">
 						<small class="text-secondary" v-if="item.isRecording">
