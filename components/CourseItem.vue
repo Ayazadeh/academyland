@@ -41,9 +41,9 @@
                         {{ item.statusText }}
                     </div>
                     <div class="prose-xs 3xl:prose-2xs">
-                        <div class="t-row space-x-3 space-x-reverse">
+                        <div class="t-row gap-x-3 space-x-reverse">
                             <span
-                                v-if="showAmount"
+                                v-if="item.showAmount"
                                 class="line-through prose-3xs text-gray-600"
                             >
                                 {{ numberFormat(item.amount) }}
@@ -78,9 +78,6 @@ const getAmount = computed(() => {
     if (props.item.amountOff === 0) {
         return 'رایگان'
     }
-    return numberFormat(props.item.amountOff) + 'تومان';
-})
-const showAmount = computed(() => {
-    return props.item.amountOff < props.item.amount
+    return numberFormat(props.item.amountOff) + ' تومان';
 })
 </script>
