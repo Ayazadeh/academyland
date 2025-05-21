@@ -1,28 +1,28 @@
 import { Expose } from "class-transformer";
 class BaseCourseDto {
     @Expose() 
-    id!: number;
+    id: number;
     @Expose()
-    title!: string;
+    title: string;
     @Expose()
-    amount!: number;
+    amount: number;
     @Expose()
-    amountOff!: number;
+    amountOff: number;
     @Expose()
-    slug!: string;
+    slug: string;
 }
 
 export class CourseDto extends BaseCourseDto {
     @Expose()
-    percent!: number;
+    percent: number;
     @Expose()
-    statusText!: string;
+    statusText: string;
     @Expose()
-    isRecording!: boolean;
+    isRecording: boolean;
     @Expose()
-    src!: string;
+    src: string;
     @Expose()
-    short_description!: string;
+    short_description: string;
     @Expose()
     get showAmount() {
         return this.amount > this.amountOff

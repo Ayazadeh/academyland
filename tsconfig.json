@@ -5,6 +5,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false
   }
 }

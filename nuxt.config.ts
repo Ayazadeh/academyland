@@ -13,5 +13,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     devProxy: PROXY_CONFIG
+  },
+  typescript: {
+    typeCheck: true,
   }
 })
