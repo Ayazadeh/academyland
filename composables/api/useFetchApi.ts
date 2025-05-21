@@ -2,7 +2,7 @@ import { plainToClass, instanceToPlain } from "class-transformer";
 import type { FetchOptions } from 'ofetch'
 import type { ClassConstructor } from "class-transformer";
 
-export const useFetchApi =<T extends ClassConstructor<unknown>>(classTransformer: T | null = null) => {
+export const useFetchApi =<T>(classTransformer: ClassConstructor<T> | null = null) => {
     const myCustomFetch = async (url: string, config?: FetchOptions) => {
         config = { baseURL: 'https://acm.academyland.net/api/web', ...config }
         try {
