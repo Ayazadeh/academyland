@@ -69,7 +69,7 @@
 		<div v-if="pending">Loading...</div>
 		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
-				<template #item="item">
+				<template #item="{ item }">
 					<CourseItem :item="item" />
 				</template>
 			</AppSlider>

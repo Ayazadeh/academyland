@@ -5,14 +5,14 @@
         :middle="activeItemIndex"
         :arrows="false"
     >
-        <template #item="{ label, id, index }">
+        <template #item="{ item }">
             <div 
                 role="button"
                 class="cursor-pointer"
-                :class="{ 'text-primary': index === activeItemIndex }"
-                @click="scrollToID(id)"
+                :class="{ 'text-primary': item.index === activeItemIndex }"
+                @click="scrollToID(item.id)"
             >
-                {{ label }}
+                {{ item.label }}
             </div>
         </template>
     </AppSlider>

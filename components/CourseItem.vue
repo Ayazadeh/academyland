@@ -62,11 +62,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { numberFormat } from '~/helpers/formatHelper';
+import { CourseDto } from '~/composables/course/course.dto';
 
-const props = withDefaults(defineProps<{
-	item: Record<string, any>;
-    hasDefaultWidth?: boolean;
-}>(), {
+interface Props {
+    item: CourseDto;
+    hasDefaultWidth?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
     hasDefaultWidth: true,
 });
 

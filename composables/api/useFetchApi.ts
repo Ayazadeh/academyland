@@ -1,4 +1,4 @@
-import { plainToClass, instanceToPlain } from "class-transformer";
+import { plainToInstance, instanceToPlain } from "class-transformer";
 import type { FetchOptions } from 'ofetch'
 import type { ClassConstructor } from "class-transformer";
 
@@ -12,7 +12,7 @@ export const useFetchApi =<T>(classTransformer: ClassConstructor<T> | null = nul
             })
         
             if (classTransformer != null) {
-                const transformed = plainToClass(classTransformer, response, { 
+                const transformed = plainToInstance(classTransformer, response, { 
                     excludeExtraneousValues: true 
                 });
                 return instanceToPlain(transformed);
