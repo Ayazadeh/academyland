@@ -30,7 +30,7 @@
                     {{ item.title }}
                 </h3>
 
-                <div class="min-h-22">
+                <div class="min-h-[6rem]">
                     <p class="prose-xs line-clamp-4">
                         {{ item.short_description }}
                     </p>

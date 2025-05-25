@@ -1,15 +1,42 @@
 @import "tailwindcss";
-
+@plugin "@tailwindcss/typography";
 @plugin 'daisyui' {
     themes: all;
 }
 
 @source 'safelist-tailwind.txt';
 
+
+@font-face {
+    font-family: 'siteFont';
+    src: url('@/assets/fonts/IRANSansXV.woff2') format('woff2');
+}
+
+:root {
+    --default-font-family: 'siteFont', sans-serif;
+
+    --ideal-font-size: 14;
+    --ideal-viewport-width: 1280;
+    --current-viewport-width: 100vw;
+
+    --tablet-ideal-font-size: 14;
+    --tablet-ideal-viewport-width: 640;
+    --tablet-current-viewport-width: 100vw;
+
+    --mobile-ideal-font-size: 13;
+    --mobile-ideal-viewport-width: 375;
+    --mobile-current-viewport-width: 100vw;
+}
+
+html {
+    font-size: calc(var(--mobile-ideal-font-size) * (
+        var(--mobile-current-viewport-width) / var(--mobile-ideal-viewport-width)
+    ));
+}
+
 body {
     direction: rtl;
-    @apply text-justify;
-    @apply text-gray-600;
+    @apply text-justify overflow-y-scroll;
 }
 
 .t-row {
@@ -22,4 +49,36 @@ body {
 
 .t-center {
     @apply flex justify-center items-center;
+}
+
+.position-center {
+    @apply absolute top-1/2 right-1/2 transform -translate-y-1/2 translate-x-1/2;
+}
+
+.layout-padding {
+    @apply px-3 lg:px-0;
+}
+
+.head {
+    @apply w-full my-3 font-black prose-lg;
+}
+
+.content-container {
+    @apply px-3 sm:px-12 lg:px-24 my-4 lg:my-0;
+}
+
+@media (min-width: 640px) {
+    html {
+        font-size: calc(var(--tablet-ideal-font-size) * (
+            var(--tablet-current-viewport-width) / var(--tablet-ideal-viewport-width)
+        ));
+    }
+}
+
+@media (min-width: 1280px) {
+    html {
+        font-size: calc(var(--ideal-font-size) * (
+            var(--current-viewport-width) / var(--ideal-viewport-width)
+        ));
+    }
 }

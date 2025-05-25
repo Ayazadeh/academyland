@@ -5,13 +5,13 @@
                 class="hidden lg:block absolute top-1/2 -right-5 transition translate--y-1/2"
                 @click="clickPrev"
             >
-                <ChevronRightIcon />
+                <ChevronRightIcon class="w-8" />
             </button>
             <button
                 class="hidden lg:block absolute top-1/2 -left-5 transition translate--y-1/2"
                 @click="clickNext"
             >
-                <ChevronLeftIcon />
+                <ChevronLeftIcon class="w-8" />
             </button>
         </template>
         <div class="overflow-x-hidden">
