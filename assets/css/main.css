@@ -15,15 +15,15 @@
 :root {
     --default-font-family: 'siteFont', sans-serif;
 
-    --ideal-font-size: 14;
+    --ideal-font-size: 12;
     --ideal-viewport-width: 1280;
     --current-viewport-width: 100vw;
 
-    --tablet-ideal-font-size: 14;
+    --tablet-ideal-font-size: 12;
     --tablet-ideal-viewport-width: 640;
     --tablet-current-viewport-width: 100vw;
 
-    --mobile-ideal-font-size: 13;
+    --mobile-ideal-font-size: 11;
     --mobile-ideal-viewport-width: 375;
     --mobile-current-viewport-width: 100vw;
 }

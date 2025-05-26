@@ -1,11 +1,14 @@
 <template>
 	<nuxt-link
 		:to="to"
-		class="group cursor-pointer block"
-		:class="{ 'w-[19rem] lg:w-[22rem]': hasDefaultWidth }"
+		class="group cursor-pointer block h-full"
+		:class="[
+			hasDefaultWidth ? 'w-[19rem] lg:w-[22rem]' : 'w-full',
+			'inline-block'
+		]"
 	>
-		<div class="card border-1 border-black/10 bg-accent text-accent-content">
-			<div class="aspect-auto bg-gray-100 shadow-sm border-b relative">
+		<div class="card border-1 border-black/10 text-accent-content h-full">
+			<div class="aspect-[4/3] bg-gray-100 shadow-sm border-b relative">
 				<div class="absolute inset-x-2 top-2" v-if="item.percent">
 					<div class="t-row justify-between">
 						<small class="text-secondary" v-if="item.isRecording">
@@ -25,12 +28,12 @@
 				</figure>
 			</div>
             
-            <div class="card-body">
+            <div class="card-body flex flex-col">
                 <h3 class="line-clamp-2 min-h-14 card-title prose-sm group-hover:text-primary transition">
                     {{ item.title }}
                 </h3>
 
-                <div class="min-h-[6rem]">
+                <div class="min-h-[6rem] flex-grow">
                     <p class="prose-xs line-clamp-4">
                         {{ item.short_description }}
                     </p>
@@ -44,7 +47,7 @@
                         <div class="t-row gap-x-3 space-x-reverse">
                             <span
                                 v-if="item.showAmount"
-                                class="line-through prose-3xs text-gray-600"
+                                class="line-through prose-xs text-gray-600"
                             >
                                 {{ numberFormat(item.amount) }}
                             </span>
