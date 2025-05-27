@@ -8,7 +8,7 @@
 		]"
 	>
 		<div class="card border-1 border-black/10 text-accent-content h-full">
-			<div class="aspect-[4/3] bg-gray-100 shadow-sm border-b relative">
+			<div class="aspect-[2/1] bg-gray-100 shadow-sm border-b relative">
 				<div class="absolute inset-x-2 top-2" v-if="item.percent">
 					<div class="t-row justify-between">
 						<small class="text-secondary" v-if="item.isRecording">
