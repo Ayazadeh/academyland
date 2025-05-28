@@ -1,4 +1,3 @@
-import { ref, computed } from "vue";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import type { AuthState, Identity, AuthToken } from "./Auth.interface";
 
