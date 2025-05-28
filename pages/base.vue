@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-col space-y-3 justify-center items-center text-center">
         <h1>my base component</h1>
+        <ThemeSelector />
         <AppModal v-model="isModalOpen">
             <div>
                 <h2>Modal Content</h2>
                 <p>This is the content of the modal.</p>
             </div>
-            
         </AppModal>
         <AppButton 
             :variant="ButtonVariantEnum.SECONDARY" 
