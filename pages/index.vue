@@ -1,25 +1,28 @@
 <template>
 	<div>
 		<div
-			class="flex flex-col relative p-10 lg:pb-32 home-header overflow-hidden"
+			class="flex flex-col relative p-6 md:p-12 lg:p-16 home-header overflow-hidden"
 		>
 			<div
-				class="z-0 absolute -inset-2 course-cover filter blur-sm contrast-125 home-header"
-			>
-				<div class="w-full h-full bg-black/50"></div>
-			</div>
+				class="z-0 absolute inset-0 course-cover home-header before:absolute before:inset-0 before:bg-gradient-to-r before:from-black/80 before:via-black/60 before:to-black/40"
+			></div>
 
 			<section
-				class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:pr-5 xs:mt-8 sm:mt-0 z-10"
+				class="flex-1 flex flex-col lg:flex-row items-center justify-center z-10 py-12 lg:py-20"
 			>
-				<div class="text-white space-y-6">
-					<h1 class="prose-xl g-head-anime">آموزش تخصصی nuxt js و vue js</h1>
-					<p class="block g-head-anime lg:w-3/4">
-						به دنیای برنامه نویسی آکادمی لند خوش آمدید، آموزش پروژه محور برنامه نویسی با طعم تجربه!
+				<div class="text-white space-y-8 max-w-3xl">
+					<h1 class="prose-2xl font-bold leading-tight g-head-anime">
+						آموزش تخصصی nuxt js و vue js
+					</h1>
+					<p class="text-lg lg:text-xl opacity-90 font-bold g-head-anime lg:w-4/5">
+						به دنیای برنامه نویسی آکادمی لند خوش آمدید، آموزش پروژه محور برنامه
+						نویسی با طعم تجربه!
 					</p>
 					<button
-						class="block btn btn-accent btn-wide g-head-anime"
-						:class="{ 'transition-none no-animation': !completeAnimation }"
+						class="btn btn-accent btn-wide g-head-anime hover:scale-105 transition-transform duration-300 shadow-lg"
+						:class="{
+							'transition-none no-animation': !completeAnimation,
+						}"
 						@click="clickGetStart"
 					>
 						شروع یادگیری
@@ -28,16 +31,7 @@
 			</section>
 		</div>
 		<section
-			class="
-			relative
-			z-50
-			grid
-			lg:-mt-16
-			lg:grid-cols-3
-			gap-5
-			max-w-5xl
-			mx-auto
-			"
+			class="relative z-50 grid lg:-mt-16 lg:grid-cols-3 gap-5 max-w-5xl mx-auto"
 		>
 			<Service
 				title="پروژه‌های عملی"
@@ -64,8 +58,10 @@
 				</template>
 			</Service>
 		</section>
-		
-		<h6 id="featured-courses" class="head text-center mt-10">دوره های آکادمی لند</h6>
+
+		<h6 id="featured-courses" class="head text-center mt-10">
+			دوره های آکادمی لند
+		</h6>
 		<div v-if="pending">Loading...</div>
 		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
@@ -78,37 +74,43 @@
 </template>
 
 <script setup lang="ts">
-import { AcademicCapIcon, BeakerIcon, CodeBracketIcon } from '@heroicons/vue/24/outline'
-import { gsap } from 'gsap'
-import ScrollToPlugin from 'gsap/ScrollToPlugin';
-import { useCourseList } from '~/composables/course/useCourse';
+import {
+	AcademicCapIcon,
+	BeakerIcon,
+	CodeBracketIcon,
+} from "@heroicons/vue/24/outline";
+import { gsap } from "gsap";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
+import { useCourseList } from "~/composables/course/useCourse";
 
 const completeAnimation = ref(false);
 
 onMounted(() => {
 	gsap.registerPlugin(ScrollToPlugin);
 	const tl = gsap.timeline();
-	tl.from('.g-head-anime', {
-		ease: 'power4',
+	tl.from(".g-head-anime", {
+		ease: "power4",
 		duration: 0.8,
 		autoAlpha: 0,
 		x: 200,
 		stagger: 0.3,
 		onComplete: () => {
 			completeAnimation.value = true;
-			gsap.set('.g-head-anime', { clearProps: 'transform' });
-		}
-	})
-})
+			gsap.set(".g-head-anime", {
+				clearProps: "transform",
+			});
+		},
+	});
+});
 const clickGetStart = () => {
 	gsap.to(window, {
 		duration: 1,
-		scrollTo: { 
-			y: '#featured-courses',
+		scrollTo: {
+			y: "#featured-courses",
 			offsetY: 110,
-		}
-	})
-}
+		},
+	});
+};
 const { data, pending } = useCourseList();
 </script>
 
@@ -120,8 +122,31 @@ const { data, pending } = useCourseList();
 	@apply invisible;
 }
 .home-header {
-	background-image: url('@/assets/images/header.jpg');
-	background-size: 100% 100%;
+	background-image: url("@/assets/images/header.jpg");
+	background-size: cover;
+	background-position: center;
+	position: relative;
+}
+.home-header::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		45deg,
+		rgba(0, 0, 0, 0.7) 0%,
+		rgba(0, 0, 0, 0.4) 100%
+	);
+	z-index: 1;
+}
+@keyframes slowZoom {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.1);
+	}
+}
+.course-cover {
+	animation: slowZoom 20s infinite alternate ease-in-out;
 }
 </style>
-  
