@@ -6,7 +6,7 @@
             <div
                 @click="resetPasswordClick"
                 role="button"
-                class="text-gray-500 text-sm underline"
+                class="text-gray-500 text-sm underline cursor-pointer"
             >
                 کلمه عبور را فراموش کرده‌ام
             </div>

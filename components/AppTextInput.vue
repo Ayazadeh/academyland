@@ -22,7 +22,7 @@
 		<template v-else>
 			<input
 				autocomplete="off"
-				class="input"
+				class="input w-full"
 				v-bind="$attrs"
 				:name="name"
 				:type="type"

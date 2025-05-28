@@ -6,7 +6,7 @@
         }"
     >
         <div class="mx-auto w-min">
-            <UserIcon class="text-secondary" />
+            <UserIcon class="w-28 h-28 text-secondary" />
         </div>
         <LoginForm 
             v-if="step === LoginStep.login"
@@ -28,9 +28,9 @@
             <div
                 role="button"
                 @click="toggleRegisterAndLogin"
-                class="text-link underline"
+                class="text-link underline cursor-pointer"
             >
-                {{ LoginStep.login == step ? 'ورود به حساب کاربری' : 'ثبت نام' }}
+                {{ LoginStep.login == step ? 'ثبت نام' : 'ورود' }}
             </div>
         </div>
     </div>
