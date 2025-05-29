@@ -14,7 +14,9 @@
 					<h1 class="prose-2xl font-bold leading-tight g-head-anime">
 						آموزش تخصصی nuxt js و vue js
 					</h1>
-					<p class="text-lg lg:text-xl opacity-90 font-bold g-head-anime lg:w-4/5">
+					<p
+						class="text-lg lg:text-xl opacity-90 font-bold g-head-anime lg:w-4/5"
+					>
 						به دنیای برنامه نویسی آکادمی لند خوش آمدید، آموزش پروژه محور برنامه
 						نویسی با طعم تجربه!
 					</p>
@@ -63,6 +65,22 @@
 			دوره های آکادمی لند
 		</h6>
 		<div v-if="pending">Loading...</div>
+		<div v-else-if="!pending && data.length === 0" role="alert" class="alert alert-error w-11/12 mx-auto">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6 shrink-0 stroke-current text-white"
+				fill="none"
+				viewBox="0 0 24 24"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+				/>
+			</svg>
+			<span class="text-white">مشکلی برای دریافت دوره ها رخ داده است</span>
+		</div>
 		<section v-else class="my-3 lg:mt-0 lg:mx-10">
 			<AppSlider :items="data">
 				<template #item="{ item }">
