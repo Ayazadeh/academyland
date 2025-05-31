@@ -1,6 +1,5 @@
-import { plainToInstance, instanceToPlain } from "class-transformer";
+import { plainToInstance, instanceToPlain, type ClassConstructor } from "class-transformer";
 import type { FetchOptions } from 'ofetch'
-import type { ClassConstructor } from "class-transformer";
 
 type HttpMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE';
 
