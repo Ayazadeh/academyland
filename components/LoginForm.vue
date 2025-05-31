@@ -14,17 +14,12 @@
 
 <script setup lang="ts">
 import { Form } from "vee-validate";
+import { useLoginValidator } from "~/composables/auth/login/login.validator";
 import { useLogin } from "@/composables/auth/login/useLogin";
-import { object, string } from "yup";
 
 const emits = defineEmits(["resetPassword"]);
 
-const { $t } = useNuxtApp();
-
-const schema = object({
-	username: string().required().label($t("username")),
-	password: string().required().label($t("password")),
-});
+const { schema } = useLoginValidator()
 
 const resetPasswordClick = () => {
 	emits("resetPassword");

@@ -1,7 +1,7 @@
 <template>
 	<fieldset class="form-control" :class="{ 'has-error': !!errorMessage, success: meta.valid }">
 
-		<label v-if="label !== ''" class="t-row justify-between pb-1.5 px-1" :for="name">
+		<label v-if="label" class="t-row justify-between pb-1.5 px-1" :for="name">
 			<span class="label-text">{{ label }}</span>
 			<slot name="leftLabel" />
 		</label>
