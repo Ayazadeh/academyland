@@ -73,7 +73,8 @@ export const useAuthStore = defineStore("auth", () => {
         getExpiresIn,
         initialStateFromLocalStore,
         clearStore,
-        setIdentity
+        setIdentity,
+		setToken
 	};
 });
 

@@ -14,7 +14,7 @@ export const useLoginService = () => {
 	}: InferType<typeof schema>): Promise<{ tokens: AuthTokens; identity: Identity } | undefined > => {
         try {
             const response: any = await fetchData('/oauth2/rest/token', {
-                method: 'post',
+                method: 'POST',
                 body: {
                     username,
                     password,

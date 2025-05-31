@@ -1,5 +1,5 @@
 export const isProd = process.env.NODE_ENV === 'production'
-export const BASE_URL = isProd ? 'https://acm.academyland.net/api/web' : 'http://' + 'localhost:3000/service'
+export const BASE_URL = isProd ? 'https://acm.academyland.net/api/web' : 'http://' + 'localhost:3001/service'
 export const PROXY_CONFIG = isProd ? {} : {
     '/service': {
         target: 'https://acm.academyland.net/api/web',

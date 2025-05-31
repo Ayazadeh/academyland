@@ -1,9 +1,16 @@
 <template>
+	<AppError center :message="error"></AppError>
 	<Form :validation-schema="schema" @submit="submit">
 		<AppTextInput name="username" :label="$t('username')" />
 		<AppTextInput name="password" :label="$t('password')" type="password" />
 		<div class="w-full flex justify-end -mt-2 mb-2">
-			<div @click="resetPasswordClick" role="button" class="text-gray-500 text-sm underline cursor-pointer">کلمه عبور را فراموش کرده‌ام</div>
+			<div
+				@click="resetPasswordClick"
+				role="button"
+				class="text-gray-500 text-sm underline cursor-pointer"
+			>
+				کلمه عبور را فراموش کرده‌ام
+			</div>
 		</div>
 
 		<AppButton :loading="loading" class="btn btn-secondary btn-block" type="submit">
@@ -15,21 +22,43 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { useLoginValidator } from "~/composables/auth/login/login.validator";
-import { useLogin } from "@/composables/auth/login/useLogin";
+import { useLoginService } from "~/composables/auth/login/login.service";
+import { useAuthStore } from "~/composables/auth/Auth.store";
 
+// Emits
 const emits = defineEmits(["resetPassword"]);
 
-const { schema } = useLoginValidator()
+// Composables & Stores
+const { schema } = useLoginValidator();
+const { login } = useLoginService();
+const store = useAuthStore();
 
+// Data
+const loading = ref(false);
+const error = ref("");
+
+// Methods
 const resetPasswordClick = () => {
 	emits("resetPassword");
 };
 
-const loading = ref(false);
-const submit = (values, { setErrors }) => {
-	console.log("submit login", values);
-	setErrors({
-		username: "نام کاربری معتبر نیست",
-	});
+const submit = async (values: any) => {
+	loading.value = true;
+	try {
+		const response = await login(values);
+		console.log('test ', response);
+		
+		if (response != undefined) {
+			store.setToken(response.tokens);
+			store.setIdentity(response.identity);
+		}
+	} catch (e: any) {
+		console.error("Error in LoginForm", e);
+		if (e?.response.status == 401) {
+			error.value = "نام کاربری یا کلمه عبور نادرست است"	
+		}
+	} finally {
+		loading.value = false;
+	}
 };
 </script>
