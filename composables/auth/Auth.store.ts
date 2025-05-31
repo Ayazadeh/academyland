@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
-import type { AuthState, Identity, AuthToken } from "./Auth.interface";
+import type { AuthState, Identity, AuthTokens } from "./Auth.interface";
 
 const defaultState = (): AuthState => ({
 	accessToken: null,
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("auth", () => {
 
 	// actions
 	const setToken = (
-		{ accessToken, refreshToken, expiresIn }: AuthToken,
+		{ accessToken, refreshToken, expiresIn }: AuthTokens,
 		setLocalStorage = true
 	) => {
 		state.value.accessToken = accessToken;

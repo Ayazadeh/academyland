@@ -1,4 +1,4 @@
-export interface AuthToken { 
+export interface AuthTokens { 
     accessToken: string | null;
     refreshToken: string | null;
     expiresIn: number | null;
@@ -11,7 +11,7 @@ export interface Identity {
     last_name?: string;
 }
 
-export interface AuthState extends AuthToken {
+export interface AuthState extends AuthTokens {
     isRefreshing: boolean;
     isRefreshSuccess: boolean;
     identity: Identity;
