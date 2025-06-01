@@ -1,3 +1,4 @@
+import { isProd, BASE_URL } from './api.config';
 import { plainToInstance, instanceToPlain, type ClassConstructor } from "class-transformer";
 import type { FetchOptions } from 'ofetch'
 
@@ -5,7 +6,7 @@ type HttpMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNEC
 
 export const useFetchApi = <T, R>(classTransformer?: ClassConstructor<T>) => {
     const myCustomFetch = async (url: string, config?: FetchOptions) => {
-        config = { baseURL: 'https://acm.academyland.net/api/web', ...config }
+        config = { baseURL: BASE_URL, ...config }
         
         if (config.method && !isValidHttpMethod(config.method)) {
             throw new Error(`Invalid HTTP method: ${config.method}`);

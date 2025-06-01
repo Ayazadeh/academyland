@@ -46,8 +46,7 @@ const submit = async (values: any) => {
 	loading.value = true;
 	try {
 		const response = await login(values);
-		console.log('test ', response);
-		
+
 		if (response != undefined) {
 			store.setToken(response.tokens);
 			store.setIdentity(response.identity);
