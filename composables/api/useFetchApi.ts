@@ -28,9 +28,6 @@ export const useFetchApi = <T, R>(classTransformer?: ClassConstructor<T>) => {
             return response;
         } catch (error) {
             console.error('Error fetching data:', error);
-            if (error instanceof Error) {
-                throw new Error(`API request failed: ${error.message}`);
-            }
             throw error;
         }
     }
