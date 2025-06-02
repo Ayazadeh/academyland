@@ -42,22 +42,20 @@ const resetPasswordClick = () => {
 	emits("resetPassword");
 };
 
+const onError = () => {
+	error.value = "نام کاربری یا کلمه عبور نادرست است";
+};
+
 const submit = async (values: any) => {
 	loading.value = true;
-	try {
-		const response = await login(values);
+	error.value = "";
+	const response = await login(values, { ignoreErrors: true, onError });
 
-		if (response != undefined) {
-			store.setToken(response.tokens);
-			store.setIdentity(response.identity);
-		}
-	} catch (e: any) {
-		console.error("Error in LoginForm", e);
-		if (e?.response.status == 401) {
-			error.value = "نام کاربری یا کلمه عبور نادرست است"	
-		}
-	} finally {
-		loading.value = false;
+	if (response != undefined) {
+		store.setToken(response.tokens);
+		store.setIdentity(response.identity);
 	}
+
+	loading.value = false;
 };
 </script>
