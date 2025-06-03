@@ -2,7 +2,7 @@ import { useFetchApi } from "~/composables/api/useFetchApi";
 import { CourseDto } from "./course.dto";
 
 export const useCourseService = () => {
-    const $fetch = useFetchApi<CourseDto, CourseDto[]>(CourseDto);
+    const $fetch = useFetchApi<CourseDto[], CourseDto>(CourseDto);
     return async () => {
         try {
             const response = await $fetch('/course/index', { 

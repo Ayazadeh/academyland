@@ -1,5 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import type { AuthState, Identity, AuthTokens } from "./Auth.interface";
+import { useIdentityService } from "./Identity.service";
 
 const defaultState = (): AuthState => ({
 	accessToken: null,
@@ -33,6 +34,16 @@ export const useAuthStore = defineStore("auth", () => {
 	const getExpiresIn = computed(() => state.value.expiresIn);
 
 	// actions
+	const fetchAndSetIdentityIfLoggedIn = async () => {
+		const fetchIdentity = useIdentityService();
+		if (isLoggedIn.value) {
+			const identity = await fetchIdentity();
+			if (identity) {
+				setIdentity(identity);
+			}
+		}
+	}
+
 	const setToken = (
 		{ accessToken, refreshToken, expiresIn }: AuthTokens,
 		setLocalStorage = true
@@ -73,8 +84,9 @@ export const useAuthStore = defineStore("auth", () => {
         getExpiresIn,
         initialStateFromLocalStore,
         clearStore,
-        setIdentity,
-		setToken
+		setIdentity,
+		setToken,
+		fetchAndSetIdentityIfLoggedIn,
 	};
 });
 
