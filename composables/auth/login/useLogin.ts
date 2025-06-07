@@ -1,12 +1,16 @@
 import { ToastEnum } from "~/types";
 import { useAuthStore } from "../Auth.store";
 import { useLoginService } from "./login.service";
+import { useLoginDialog } from "./useLoginDialog";
 
 export const useLogin = () => {
-	const store = useAuthStore();
-	const error = ref("");
 	const loading = ref(false);
+	const error = ref("");
+	const { loginCallback, loginModel } = useLoginDialog();
 	const { login } = useLoginService();
+	const { showToast } = useToast();
+	const router = useRouter();
+	const store = useAuthStore();
 
 	const onError = (e) => {
 		if (e?.response?.status == 401) {
@@ -16,8 +20,6 @@ export const useLogin = () => {
 		}
 	};
 
-	const { showToast } = useToast();
-	const router = useRouter();
 	const submit = async (values: any) => {
 		loading.value = true;
 		error.value = "";
@@ -26,6 +28,10 @@ export const useLogin = () => {
 		if (response != undefined) {
 			store.setToken(response.tokens);
 			store.setIdentity(response.identity);
+			if (typeof unref(loginCallback) == 'function') {
+				unref(loginCallback)(response)
+			}
+			loginModel.value = false;
 			showToast({ message: "ورود با موفقیت انجام شد", type: ToastEnum.SUCCESS });
 			router.replace("/");
 		}
