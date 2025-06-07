@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import type { AuthState, Identity, AuthTokens } from "./Auth.interface";
-import { useIdentityService } from "./Identity.service";
+import { useIdentityService } from "./identity.service";
 
 const defaultState = (): AuthState => ({
 	accessToken: null,
