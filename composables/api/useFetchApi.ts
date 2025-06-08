@@ -25,7 +25,11 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 		config?: FetchOptions,
 		customConfig: FetchCustomConfig = {}
 	) => {
-		config = { baseURL: BASE_URL, ...config };
+		const router = useRouter();
+
+		config = { baseURL: BASE_URL, retry: 0, ...config };
+		customConfig = { goToLogin: true, ...customConfig };
+
 		const authStore = useAuthStore();
 		if (customConfig.setToken) {
 			config.headers = {
@@ -51,12 +55,52 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			}
 
 			return response;
-		} catch (error) {
+		} catch (error: any) {
 			customConfig.onError?.(error as FetchError);
 
 			if (customConfig.ignoreErrors) {
 				return;
 			}
+
+			const { clearStore } = useAuthStore();
+			if (error.response && error.response.status === 401) {
+				return handleRefreshToken(error, url, config, customConfig)?.catch((e) => {
+					clearStore();
+					goToLoginIfYouShould(customConfig);
+				})
+			}
+		}
+
+		function goToLoginIfYouShould(FetchCustomConfig: FetchCustomConfig) {
+			if (FetchCustomConfig.goToLogin) {
+				router.replace("/auth");
+			}
+		}
+
+		async function handleRefreshToken(error: FetchError, url: string, config: FetchOptions, customConfig: FetchCustomConfig) {
+			const authStore = useAuthStore();
+			if (!authStore.isLoggedIn) {
+				console.error("send request that needs token while user is not logged in: ", url);
+				return new Promise((_, reject) => {
+					reject(error);
+				})
+			}
+			if (!authStore.isRefreshing) {
+				await authStore.doRefreshToken()
+			}
+			return new Promise((resolve, reject) => {
+				watch(() => authStore.isRefreshing, (isRefreshing) => {
+					console.log('test isrefreshing', isRefreshing);	
+					if (!isRefreshing) {
+						console.log("refresh token done, retry request", authStore.isRefreshSuccess, config.params);
+						if (authStore.isRefreshSuccess) {
+							resolve(myCustomFetch(url, config, customConfig));
+						} else {
+							reject(error);
+						}
+					}
+				});
+			})
 		}
 	};
 	return myCustomFetch;

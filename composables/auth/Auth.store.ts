@@ -1,6 +1,7 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 import type { AuthState, Identity, AuthTokens } from "./Auth.interface";
 import { useIdentityService } from "./identity.service";
+import { useRefreshTokenService } from "./useRefreshToken.service";
 
 const defaultState = (): AuthState => ({
 	accessToken: null,
@@ -39,7 +40,7 @@ export const useAuthStore = defineStore("auth", () => {
 		if (isLoggedIn.value) {
 			const identity = await fetchIdentity();
 			if (identity) {
-				setIdentity(identity);
+				setIdentity(identity as Identity);
 			}
 		}
 	}
@@ -74,6 +75,21 @@ export const useAuthStore = defineStore("auth", () => {
 		state.value.identity = identity;
 	};
 
+	const doRefreshToken = async () => {
+		state.value.isRefreshing = true;
+		const service = useRefreshTokenService();
+		try {
+			const response = await service(state.value.refreshToken!);
+			if (response !== undefined) {
+				setToken(response.tokens, true);
+				state.value.isRefreshSuccess = true;
+				return response;
+			}
+		} finally {
+			state.value.isRefreshing = false;
+		}
+	}
+
 	return {
 		...state.value,
 		isLoggedIn,
@@ -87,6 +103,7 @@ export const useAuthStore = defineStore("auth", () => {
 		setIdentity,
 		setToken,
 		fetchAndSetIdentityIfLoggedIn,
+		doRefreshToken,
 	};
 });
 

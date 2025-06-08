@@ -30,7 +30,7 @@ export const useLoginService = () => {
 		);
 
 		if (response !== undefined) {
-			const { access_token, refresh_token, expires_in, identity } = response;
+			const { access_token, refresh_token, expires_in, identity } = response as LoginDto;
 			return {
 				tokens: {
 					accessToken: access_token,

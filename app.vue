@@ -1,5 +1,6 @@
 <template>
 	<div>
+    {{ authStore.getFullName }}
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
