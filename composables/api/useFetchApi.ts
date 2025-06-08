@@ -67,7 +67,7 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 				return handleRefreshToken(error, url, config, customConfig)?.catch((e) => {
 					clearStore();
 					goToLoginIfYouShould(customConfig);
-				})
+				});
 			}
 		}
 
@@ -77,30 +77,40 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			}
 		}
 
-		async function handleRefreshToken(error: FetchError, url: string, config: FetchOptions, customConfig: FetchCustomConfig) {
+		async function handleRefreshToken(
+			error: FetchError,
+			url: string,
+			config: FetchOptions,
+			customConfig: FetchCustomConfig
+		) {
 			const authStore = useAuthStore();
 			if (!authStore.isLoggedIn) {
 				console.error("send request that needs token while user is not logged in: ", url);
 				return new Promise((_, reject) => {
 					reject(error);
-				})
+				});
 			}
-			if (!authStore.isRefreshing) {
-				await authStore.doRefreshToken()
+			if (!authStore.isRefreshing && !authStore.isRefreshSuccess) {
+				await authStore.doRefreshToken();
 			}
 			return new Promise((resolve, reject) => {
-				watch(() => authStore.isRefreshing, (isRefreshing) => {
-					console.log('test isrefreshing', isRefreshing);	
-					if (!isRefreshing) {
-						console.log("refresh token done, retry request", authStore.isRefreshSuccess, config.params);
-						if (authStore.isRefreshSuccess) {
-							resolve(myCustomFetch(url, config, customConfig));
-						} else {
-							reject(error);
+				if (authStore.isRefreshSuccess) {
+					resolve(myCustomFetch(url, config, customConfig));
+				} else {
+					watch(
+						() => authStore.isRefreshing,
+						(isRefreshing) => {
+							if (!isRefreshing) {
+								if (authStore.isRefreshSuccess) {
+									resolve(myCustomFetch(url, config, customConfig));
+								} else {
+									reject(error);
+								}
+							}
 						}
-					}
-				});
-			})
+					);
+				}
+			});
 		}
 	};
 	return myCustomFetch;
