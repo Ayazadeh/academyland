@@ -62,12 +62,17 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 				return;
 			}
 
-			const { clearStore } = useAuthStore();
 			if (error.response && error.response.status === 401) {
-				return handleRefreshToken(error, url, config, customConfig)?.catch((e) => {
-					clearStore();
+				try {
+					const result = await handleRefreshToken(error, url, config, customConfig);
+					if (result) {
+						return result;
+					}
+				} catch (e) {
+					authStore.clearStore();
 					goToLoginIfYouShould(customConfig);
-				});
+					throw e;
+				}
 			}
 		}
 
@@ -84,15 +89,18 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			customConfig: FetchCustomConfig
 		) {
 			const authStore = useAuthStore();
+
 			if (!authStore.isLoggedIn) {
 				console.error("send request that needs token while user is not logged in: ", url);
 				return new Promise((_, reject) => {
 					reject(error);
 				});
 			}
+
 			if (!authStore.isRefreshing && !authStore.isRefreshSuccess) {
-				await authStore.doRefreshToken();
+				authStore.doRefreshToken();
 			}
+
 			return new Promise((resolve, reject) => {
 				if (authStore.isRefreshSuccess) {
 					resolve(myCustomFetch(url, config, customConfig));
