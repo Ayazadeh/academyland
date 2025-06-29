@@ -88,8 +88,6 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			config: FetchOptions,
 			customConfig: FetchCustomConfig
 		) {
-			const authStore = useAuthStore();
-
 			if (!authStore.isLoggedIn) {
 				console.error("send request that needs token while user is not logged in: ", url);
 				return new Promise((_, reject) => {
@@ -97,19 +95,19 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 				});
 			}
 
-			if (!authStore.isRefreshing && !authStore.isRefreshSuccess) {
-				authStore.doRefreshToken();
+			if (!authStore.isTokenRefreshing && !authStore.isTokenRefreshSuccess) {
+				await authStore.doRefreshToken();
 			}
 
 			return new Promise((resolve, reject) => {
-				if (authStore.isRefreshSuccess) {
+				if (authStore.isTokenRefreshSuccess) {
 					resolve(myCustomFetch(url, config, customConfig));
 				} else {
 					watch(
-						() => authStore.isRefreshing,
+						() => authStore.isTokenRefreshing,
 						(isRefreshing) => {
 							if (!isRefreshing) {
-								if (authStore.isRefreshSuccess) {
+								if (authStore.isTokenRefreshSuccess) {
 									resolve(myCustomFetch(url, config, customConfig));
 								} else {
 									reject(error);

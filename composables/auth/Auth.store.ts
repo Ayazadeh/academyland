@@ -17,6 +17,8 @@ export const useAuthStore = defineStore("auth", () => {
 
 	// getters
 	const isLoggedIn = computed(() => !!state.value.accessToken);
+	const isTokenRefreshSuccess = computed(() => state.value.isRefreshSuccess)
+	const isTokenRefreshing = computed(() => state.value.isRefreshing)
 	const getFullName = computed(() =>
 		state.value.identity.first_name
 			? `${state.value.identity.first_name} ${state.value.identity.last_name}`
@@ -85,14 +87,16 @@ export const useAuthStore = defineStore("auth", () => {
 				state.value.isRefreshSuccess = true;
 				return response;
 			}
+			
 		} finally {
 			state.value.isRefreshing = false;
 		}
 	}
 
 	return {
-		...state.value,
 		isLoggedIn,
+		isTokenRefreshSuccess,
+		isTokenRefreshing,
 		getFullName,
         getToken,
         getLocalStoreAccessToken,
