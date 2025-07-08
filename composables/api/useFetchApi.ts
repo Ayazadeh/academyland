@@ -82,7 +82,7 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			}
 		}
 
-		async function handleRefreshToken(
+		function handleRefreshToken(
 			error: FetchError,
 			url: string,
 			config: FetchOptions,
@@ -96,7 +96,7 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			}
 
 			if (!authStore.isTokenRefreshing && !authStore.isTokenRefreshSuccess) {
-				await authStore.doRefreshToken();
+				authStore.doRefreshToken();
 			}
 
 			return new Promise((resolve, reject) => {
