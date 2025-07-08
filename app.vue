@@ -1,6 +1,5 @@
 <template>
 	<div>
-    {{ authStore.getFullName }}
     <template v-if="clientRender">
       <client-only>
         <NuxtLayout>
@@ -23,11 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import auth from './pages/auth.vue'
 import { themeChange } from 'theme-change'
 import { useAuthStore } from '~/composables/auth/Auth.store'
 import { useLoginDialog } from './composables/auth/login/useLoginDialog'
-import auth from './pages/auth.vue'
 import { useAuthWrapper } from './composables/auth/useAuthWrapper'
 
 // title
