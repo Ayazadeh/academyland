@@ -1,9 +1,20 @@
 <template>
 	<div>
     {{ authStore.getFullName }}
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <template v-if="clientRender">
+      <client-only>
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+      </client-only>
+    </template>
+
+    <template v-else>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </template>
+    
     <TheToast />
     <AppModal v-model="loginModel">
       <auth is-dialog></auth>
@@ -17,14 +28,27 @@ import { themeChange } from 'theme-change'
 import { useAuthStore } from '~/composables/auth/Auth.store'
 import { useLoginDialog } from './composables/auth/login/useLoginDialog'
 import auth from './pages/auth.vue'
+import { useAuthWrapper } from './composables/auth/useAuthWrapper'
 
-const authStore = useAuthStore()  
-
-onMounted(() => {
-    themeChange(false)
-    authStore.fetchAndSetIdentityIfLoggedIn()
+// title
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk}-acanet` : 'آکادمی لند';
+  }
 })
+
+// theme
+onMounted(() => themeChange(false))
+
+// auth
+const authStore = useAuthStore()  
+onMounted(() => authStore.fetchAndSetIdentityIfLoggedIn())
 
 const { loginModel } = useLoginDialog() 
 
+const { isAuthRoute } = useAuthWrapper();
+const clientRender = ref(false)
+if (import.meta.server && unref(isAuthRoute)) {
+  clientRender.value = true;
+}
 </script>
