@@ -1,21 +1,13 @@
 <template>
-    <div>
-        <div class="min-h-6">
-            <client-only>
-                <template v-if="authStore.isLoggedIn">
-                    <span>{{ authStore.getFullName }}</span>
-                    <button @click="logout">خروج</button>
-                </template>
-                <button v-else @click="() => open()">ورود/ثبت نام</button>
-            </client-only>
-        </div>
+    <section class="t-col min-h-screen">
+        <TheMenu />
 
         <main class="mb-10">
             <slot />
         </main>
 
         <foot>footer from default layout</foot er>
-    </div>
+    </section>
 </template>
 
 <script setup lang="ts">
