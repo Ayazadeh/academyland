@@ -53,10 +53,6 @@
 				</div>
 			</section>
 
-			<section>
-				<ThemeSelector dir="ltr" />
-			</section>
-
 			<section class="t-row">
 				<client-only>
 					<button

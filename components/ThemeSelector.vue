@@ -1,13 +1,15 @@
 <template>
-    <div>
-        <select class="select select-primary" data-choose-theme>
-            <option disabled selected>Select Theme</option>
+    <div dir="rtl">
+        <select class="select select-ghost select-primary" data-choose-theme>
+            <option disabled selected> تم </option>
             <option v-for="theme in themes" :value="theme">{{ theme }}</option>
         </select>
     </div>
 </template>
 
 <script setup>
+import { themeChange } from 'theme-change';
+
 const themes = [
     'light',
     'dark',
@@ -45,4 +47,6 @@ const themes = [
     'abyss',
     'silk'
 ]
+
+onMounted(() => themeChange(false))
 </script>

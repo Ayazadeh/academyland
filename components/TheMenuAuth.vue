@@ -14,6 +14,7 @@
 			class="absolute inset-x-0 h-0 invisible rounded-box top-10 z-30 bg-base-100"
             ref="target"
 		>
+			<ThemeSelector class="m-2" />
             <button @click="logout" class="p-4 text-error lg:ml-4">خروج</button>
         </div>
 	</div>

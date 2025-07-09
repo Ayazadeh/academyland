@@ -58,7 +58,7 @@
             "
 		>
 			<section class="lg:col-span-8 t-col space-y-3">
-				<div class="card border rounded-box p-4">
+				<div class="card shadow/20 rounded-box p-4">
 					<div class="card-body">
 						<h6
 							:id="CourseTabs[0].id"
@@ -83,7 +83,7 @@
 						</article>
 					</div>
 				</div>
-				<div class="card border rounded-box p-4">
+				<div class="card shadow/20 rounded-box p-4">
 					<div class="card-body">
 						<h6
 							:id="CourseTabs[1].id"
@@ -94,7 +94,7 @@
 						<div class="h-20">پیش نیازهای دوره در اینجا قرار می‌گیرد</div>
 					</div>
 				</div>
-				<div class="card border rounded-box p-4">
+				<div class="card shadow/20 rounded-box p-4">
 					<div class="card-body">
 						<h6
 							:id="CourseTabs[2].id"
@@ -111,7 +111,7 @@
 					</div>
 				</div>
 
-				<div class="card border rounded-box p-4">
+				<div class="card shadow/20 rounded-box p-4">
 					<div class="card-body">
 						<h6
 							:id="CourseTabs[3].id"
@@ -124,7 +124,7 @@
 				</div>
 
 				<client-only>
-					<div class="card border rounded-box p-4">
+					<div class="card shadow/20 rounded-box p-4">
 						<div class="card-body">
 							<h6
 								:id="CourseTabs[4].id"
@@ -153,7 +153,7 @@
 				</client-only>
 			</section>
 			<aside class="lg:col-span-4 t-col space-y-3">
-				<section class="border rounded-box p-4">
+				<section class="shadow/20 rounded-box p-4">
 					<div class="t-row justify-between p-3">
 						<span class="block font-medium prose-sm">قیمت دوره</span>
 						<span class="block">869,000 تومان</span>
@@ -192,7 +192,7 @@
 					<client-only>دکمه پرداخت و ثبت نام دوره</client-only>
 				</section>
 
-				<section class="border rounded-box box p-4">
+				<section class="shadow/20 rounded-box box p-4">
 					<div class="t-row">
 						<div class="avatar">
 							<div class="rounded-full w-20 h-20">

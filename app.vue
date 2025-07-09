@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import auth from './pages/auth.vue'
-import { themeChange } from 'theme-change'
 import { useAuthStore } from '~/composables/auth/Auth.store'
 import { useLoginDialog } from './composables/auth/login/useLoginDialog'
 import { useAuthWrapper } from './composables/auth/useAuthWrapper'
@@ -34,9 +33,6 @@ useHead({
     return titleChunk ? `${titleChunk}-acanet` : 'آکادمی لند';
   }
 })
-
-// theme
-onMounted(() => themeChange(false))
 
 // auth
 const authStore = useAuthStore()  
