@@ -1,10 +1,58 @@
 <template>
-	<div class="min-h-[4rem]">
+	<div>
 		<div
 			id="the-menu"
-			class="t-row justify-between px-10 py-2.5 3xl:text-sm shadow-lg"
+			class="t-row justify-between px-10 3xl:text-sm shadow-lg bg-white min-h-[3rem]"
 		>
-			<section></section>
+			<section class="t-row">
+				<button
+					class="lg:hidden block"
+					@click="toggleMenu"
+				>
+					<Bars3Icon class="w-8" />
+				</button>
+				<div
+					ref="target"
+					v-bind="$attrs"
+					class="
+					invisible 
+					opacity-0 
+					top-10 
+					inset-x-0
+					h-0
+					bg-base-200
+					flex 
+					flex-col
+					text-center
+					absolute 
+					z-20 
+					mt-3 
+					rounded-box 
+					border 
+					shadow-lg
+					lg:flex
+					lg:flex-row
+					lg:items-center
+					lg:visible
+					lg:opacity-100
+					lg:relative
+					lg:border-none
+					lg:rounded-none 
+					lg:shadow-none 
+					lg:mt-0
+					lg:inset-0
+					"
+				>
+					<router-link
+						v-for="(item, index) in links"
+						:key="`menu-${index}`"
+						:to="item.to"
+						class="w-full lg:w-auto py-3 pr-4 cursor-pointer"
+					>
+						{{ item.title }}
+					</router-link>
+				</div>
+			</section>
 			<section class="t-row">
 				<client-only>
 					<button
@@ -19,7 +67,10 @@
 					</template>
 				</client-only>
 
-				<router-link class="!text-gray-600 font-bold" to="/">
+				<router-link
+					class="!text-gray-600 font-bold"
+					to="/"
+				>
 					آکادمی لند
 				</router-link>
 			</section>
@@ -30,7 +81,37 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/composables/auth/Auth.store';
 import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
+import { Bars3Icon } from '@heroicons/vue/24/outline';
 
 const authStore = useAuthStore();
 const { open } = useLoginDialog();
+
+const links = [
+	{
+		title: 'صفحه اصلی',
+		to: '/',
+	},
+	{
+		title: 'دوره‌های آموزشی',
+		to: '/courses',
+	},
+	{
+		title: 'مقالات',
+		to: '/articles',
+	},
+	{
+		title: 'درباره آکادمی لند',
+		to: '/about',
+	},
+];
+
+const { toggleMenu, target } = useMenu();
+const disable = useEnableByRoute([{ name: 'courses-slug' }]);
+useFixMenu('#the-menu', disable);
 </script>
+
+<style scoped>
+.router-link-exact-active {
+	color: green;
+}
+</style>
