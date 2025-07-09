@@ -1,8 +1,7 @@
 <template>
-	<div>
 		<div
 			id="the-menu"
-			class="t-row justify-between px-10 3xl:text-sm shadow-lg bg-white min-h-[3rem]"
+			class="navbar t-row justify-between px-10 3xl:text-sm shadow-lg"
 		>
 			<section class="t-row">
 				<button
@@ -20,7 +19,7 @@
 					top-10 
 					inset-x-0
 					h-0
-					bg-base-200
+					bg-base-100
 					flex 
 					flex-col
 					text-center
@@ -53,6 +52,11 @@
 					</router-link>
 				</div>
 			</section>
+
+			<section>
+				<ThemeSelector dir="ltr" />
+			</section>
+
 			<section class="t-row">
 				<client-only>
 					<button
@@ -75,7 +79,6 @@
 				</router-link>
 			</section>
 		</div>
-	</div>
 </template>
 
 <script setup lang="ts">

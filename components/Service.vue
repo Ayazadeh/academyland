@@ -1,7 +1,7 @@
 <template>
     <div 
         class="
-        bg-white
+        bg-base-100
         t-row
         border
         w-full

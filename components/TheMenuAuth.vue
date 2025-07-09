@@ -3,7 +3,7 @@
 		class="relative min-w-24 transition duration-1000"
 		:class="{ 'opacity-0': !authStore.getFullName }"
 	>
-		<button @click="openMenu" class="btn btn-link no-animation lg:ml-4 t-row">
+		<button @click="openMenu" class="btn btn-link no-animation lg:ml-4 t-row text-base-content">
 			<span>
 				{{ authStore.getFullName }}
 			</span>
@@ -11,7 +11,7 @@
 			<chevron-down-icon class="w-4 h-4 mr-1" />
 		</button>
 		<div
-			class="absolute inset-x-0 h-0 invisible rounded-box top-10 z-30 bg-white"
+			class="absolute inset-x-0 h-0 invisible rounded-box top-10 z-30 bg-base-100"
             ref="target"
 		>
             <button @click="logout" class="p-4 text-error lg:ml-4">خروج</button>
