@@ -1,7 +1,7 @@
 <template>
 		<div
 			id="the-menu"
-			class="navbar t-row justify-between px-10 3xl:text-sm shadow-lg"
+			class="navbar t-row justify-between px-10 3xl:text-sm shadow-lg bg-base-100 z-40"
 		>
 			<section class="t-row">
 				<button
@@ -23,8 +23,7 @@
 					flex 
 					flex-col
 					text-center
-					absolute 
-					z-20 
+					absolute
 					mt-3 
 					rounded-box 
 					border 

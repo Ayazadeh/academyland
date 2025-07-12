@@ -33,7 +33,7 @@
 			</section>
 		</div>
 		<section
-			class="relative z-50 grid lg:-mt-16 lg:grid-cols-3 gap-5 max-w-5xl mx-auto"
+			class="relative z-10 grid lg:-mt-16 lg:grid-cols-3 gap-5 max-w-5xl mx-auto p-1 mt-5"
 		>
 			<Service
 				title="پروژه‌های عملی"
@@ -61,11 +61,18 @@
 			</Service>
 		</section>
 
-		<h6 id="featured-courses" class="head text-center mt-10">
+		<h6
+			id="featured-courses"
+			class="head text-center mt-10"
+		>
 			دوره های آکادمی لند
 		</h6>
 		<div v-if="pending">Loading...</div>
-		<div v-else-if="!pending && data.length === 0" role="alert" class="alert alert-error w-11/12 mx-auto">
+		<div
+			v-else-if="!pending && data.length === 0"
+			role="alert"
+			class="alert alert-error w-11/12 mx-auto"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-6 w-6 shrink-0 stroke-current text-white"
@@ -81,7 +88,10 @@
 			</svg>
 			<span class="text-white">مشکلی برای دریافت دوره ها رخ داده است</span>
 		</div>
-		<section v-else class="my-3 lg:mt-0 lg:mx-10">
+		<section
+			v-else
+			class="my-3 lg:mt-0 lg:mx-10"
+		>
 			<AppSlider :items="data">
 				<template #item="{ item }">
 					<CourseItem :item="item" />

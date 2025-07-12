@@ -3,10 +3,10 @@
         class="
         bg-base-100
         t-row
-        border
         w-full
-        lg:border-none 
+        shadow/20
         lg:shadow
+        lg:border-none
         lg:max-w-[20rem]
         rounded-box
         p-3
