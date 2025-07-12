@@ -168,7 +168,17 @@
 				<section class="shadow/20 rounded-box p-4">
 					<div class="t-row justify-between p-3">
 						<span class="block font-medium prose-sm">قیمت دوره</span>
-						<span class="block">{{ numberFormat(data['amount']) }} تومان</span>
+						<div class="flex space-x-2">
+							<span
+								class="line-through prose-xs text-gray-600"
+								v-if="showAmount"
+							>
+								{{ numberFormat(data['amount']) }}
+							</span>
+							<span>
+								{{ getAmount }}
+							</span>
+						</div>
 					</div>
 					<div
 						class="t-row justify-between p-3"
@@ -189,7 +199,7 @@
 						<span class="block font-medium prose-sm">
 							مدت زمان تقریبی دوره
 						</span>
-						<span class="block">20 ساعت</span>
+						<span class="block">{{ data['computedEstimateDuration'] }}</span>
 					</div>
 					<div
 						class="t-row justify-between p-3"
@@ -248,5 +258,13 @@ const route = useRoute()
 const { data, pending } = useCourseDetail(route.params.slug as string)
 watchEffect(() => {
 	console.log('data', data.value);
+})
+
+const showAmount = computed(() => data.value?.['amountOff'] !== data.value?.['amount'])
+const getAmount = computed(() => {
+    if (data.value?.['amountOff'] === 0) {
+        return 'رایگان'
+    }
+	return numberFormat(data.value?.['amountOff']) + ' تومان';
 })
 </script>

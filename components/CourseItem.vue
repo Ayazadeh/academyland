@@ -28,7 +28,7 @@
 				</figure>
 			</div>
             
-            <div class="card-body flex flex-col">
+            <div class="card-body flex flex-col bg-base-100 text-base-content">
                 <h3 class="line-clamp-2 min-h-14 card-title prose-sm group-hover:text-primary transition">
                     {{ item.title }}
                 </h3>
