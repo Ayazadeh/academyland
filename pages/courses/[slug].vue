@@ -1,5 +1,6 @@
 <template>
-	<div>
+	<div v-if="pending">loading...</div>
+	<div v-else-if="data">
 		<section
 			class="
             grid 
@@ -28,7 +29,7 @@
                 lg:space-y-4 
                 "
 			>
-				<h1 class="font-bold prose-3xl text-white">
+				<h1 class="font-bold prose-2xl text-white">
 					پیاده سازی فروشگاه با vue و nuxt 3
 				</h1>
 				<div class="t-row">
@@ -92,6 +93,7 @@
 							{{ CourseTabs[1].label }}
 						</h6>
 						<div class="h-20">پیش نیازهای دوره در اینجا قرار می‌گیرد</div>
+						<div dir="ltr">{{ data }}</div>
 					</div>
 				</div>
 				<div class="card shadow/20 rounded-box p-4">
@@ -227,8 +229,16 @@
 import { CourseTabs } from '~/composables/course/Course.const'
 import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
 import { useAuthStore } from '~/composables/auth/Auth.store';
+import { useCourseDetail } from '~/composables/course/useCourseDetail';
 
 const { open: openLoginDialog } = useLoginDialog();
 
 const authStore = useAuthStore();
+
+const route = useRoute()
+
+const { data, pending } = useCourseDetail(route.params.slug as string)
+watchEffect(() => {
+	console.log('data', data.value);
+})
 </script>

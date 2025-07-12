@@ -11,11 +11,4 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '~/composables/auth/Auth.store';
-import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
-import { useLogout } from '~/composables/auth/useLogout';
-
-const authStore = useAuthStore()
-const { open } = useLoginDialog();
-const { logout } = useLogout();
 </script>
