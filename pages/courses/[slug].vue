@@ -212,7 +212,9 @@
 						<span class="block font-medium prose-sm">تعداد شرکت کنندگان</span>
 						<span class="block"> 120 </span>
 					</div>
-					<client-only>دکمه پرداخت و ثبت نام دوره</client-only>
+					<client-only>
+						پرداخت
+					</client-only>
 				</section>
 
 				<section class="shadow/20 rounded-box box p-4">
@@ -256,9 +258,6 @@ const authStore = useAuthStore();
 const route = useRoute()
 
 const { data, pending } = useCourseDetail(route.params.slug as string)
-watchEffect(() => {
-	console.log('data', data.value);
-})
 
 const showAmount = computed(() => data.value?.['amountOff'] !== data.value?.['amount'])
 const getAmount = computed(() => {

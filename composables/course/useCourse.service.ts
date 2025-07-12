@@ -32,7 +32,25 @@ export const useCourseDetailService = () => {
 
 			return response;
 		} catch (error) {
-			console.error('Error fetching courses:', error);
+			console.error('Error fetching course detail:', error);
+			throw error;
+		}
+	};
+};
+
+export const useIsUserInTheCourseService = () => {
+	const $fetch = useFetchApi<Boolean>();
+	return async (id: number) => {
+		try {
+			const response = await $fetch('/course-videos/is-user-in-the-course', {
+				params: {
+					id
+				},
+			}, { setToken: true });
+			
+			return !!response;
+		} catch (error) {
+			console.error('Error fetching is user in the course:', error);
 			throw error;
 		}
 	};
