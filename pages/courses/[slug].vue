@@ -1,5 +1,19 @@
 <template>
-	<div v-if="pending">loading...</div>
+	<div v-if="pending">
+		<AppSkeleton :type="SkeletonTypes.CUSTOM">
+			<div
+				class="
+				h-96
+				w-full
+				bg-gray-300
+				"
+			></div>
+		</AppSkeleton>
+		<AppSkeleton
+			:type="SkeletonTypes.ONE_LINE"
+			class="mt-3"
+		/>
+	</div>
 	<div v-else-if="data">
 		<section
 			class="
@@ -13,7 +27,7 @@
 					<img
 						class="w-full h-full"
 						loading="lazy"
-						src="https://academyland.net/api/web/images/courses/store-vue-nuxt.png"
+						:src="data['src']"
 					/>
 				</figure>
 			</div>
@@ -30,10 +44,12 @@
                 "
 			>
 				<h1 class="font-bold prose-2xl text-white">
-					پیاده سازی فروشگاه با vue و nuxt 3
+					{{ data['title'] }}
 				</h1>
 				<div class="t-row">
-					<div class="badge badge-secondary badge-lg text-xs">در حال ضبط</div>
+					<div class="badge badge-secondary badge-lg text-xs">
+						{{ data['statusText'] }}
+					</div>
 				</div>
 			</div>
 		</section>
@@ -68,19 +84,7 @@
 							{{ CourseTabs[0].label }}
 						</h6>
 						<article>
-							<p>
-								Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-								Laboriosam possimus consequatur alias ipsa a delectus quibusdam
-								esse quo. Accusantium dolore modi eius veniam nulla. Soluta ex
-								cupiditate voluptates voluptatum quam? Lorem ipsum dolor sit
-								amet consectetur adipisicing elit. Harum officia quia ad ipsum
-								temporibus aliquam voluptas itaque amet necessitatibus, dolorum
-								libero odio voluptatibus. Vero modi suscipit dolor sequi
-								molestiae illum. Lorem ipsum dolor, sit amet consectetur
-								adipisicing elit. Ab officia sequi molestiae voluptatem sapiente
-								error, ipsa laborum asperiores, aut distinctio quos earum
-								blanditiis fuga vitae labore at tenetur maxime esse.
-							</p>
+							<p v-html="data['short_description']"></p>
 						</article>
 					</div>
 				</div>
@@ -92,8 +96,10 @@
 						>
 							{{ CourseTabs[1].label }}
 						</h6>
-						<div class="h-20">پیش نیازهای دوره در اینجا قرار می‌گیرد</div>
-						<div dir="ltr">{{ data }}</div>
+						<div
+							class="h-20"
+							v-html="data['requirements']"
+						></div>
 					</div>
 				</div>
 				<div class="card shadow/20 rounded-box p-4">
@@ -105,7 +111,9 @@
 							{{ CourseTabs[2].label }}
 						</h6>
 						<template v-if="true">
-							<div class="h-20">لیست ویدئوهای دوره در اینجا قرار می‌گیرد</div>
+							<div v-for="chapter in data['courseChapters']">
+								{{ chapter.chapterName }}
+							</div>
 						</template>
 						<template v-else>
 							<p>هنوز ویدئویی منتشر نشده است.</p>
@@ -121,7 +129,9 @@
 						>
 							{{ CourseTabs[3].label }}
 						</h6>
-						<div class="h-10">لیست سوالات متداول در اینجا قرار می‌گیرد</div>
+						<div v-for="item in data['courseQuestions']">
+							{{ item.question }}
+						</div>
 					</div>
 				</div>
 
@@ -158,7 +168,7 @@
 				<section class="shadow/20 rounded-box p-4">
 					<div class="t-row justify-between p-3">
 						<span class="block font-medium prose-sm">قیمت دوره</span>
-						<span class="block">869,000 تومان</span>
+						<span class="block">{{ numberFormat(data['amount']) }} تومان</span>
 					</div>
 					<div
 						class="t-row justify-between p-3"
@@ -168,8 +178,9 @@
 						<span
 							class="block"
 							dir="ltr"
-							>12 : 20 : 15</span
 						>
+							{{ data['courseDuration'] }}
+						</span>
 					</div>
 					<div
 						class="t-row justify-between p-3"
@@ -210,13 +221,8 @@
 					</div>
 					<article class="mt-4">
 						<p class="text-gray-500">
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-							Recusandae, numquam vero deleniti animi eligendi nam non corporis
-							officia odit, odio est, labore voluptas ex suscipit accusamus
-							aliquam molestias similique cupiditate. Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Ad dolores omnis odio perspiciatis,
-							totam voluptatum saepe hic ea animi enim aliquid nihil laborum
-							voluptates aliquam ab ducimus aperiam. Velit, nostrum.
+							محمد ایازاده هستم،‌ دانش آموخته دانشگاه صنعتی کرمانشاه و اکنون
+							بعنوان فرانت اند دولوپر مشغول به کار هستم.
 						</p>
 					</article>
 				</section>
@@ -230,6 +236,8 @@ import { CourseTabs } from '~/composables/course/Course.const'
 import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
 import { useAuthStore } from '~/composables/auth/Auth.store';
 import { useCourseDetail } from '~/composables/course/useCourseDetail';
+import { SkeletonTypes } from '~/components/AppSkeleton/Skeleton.enum';
+import { numberFormat } from '~/helpers/formatHelper';
 
 const { open: openLoginDialog } = useLoginDialog();
 
