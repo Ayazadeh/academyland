@@ -40,14 +40,16 @@ export const useCanBuyConsumer = () => {
 }
 
 export const useCourseDetail = (slug: string) => {
+	if (!slug) throw new Error('Slug is missing');
+
 	const getCourseDetail = useCourseDetailService();
-	const { data, pending } = useLazyAsyncData(
+	const { data, pending, error } = useLazyAsyncData(
 		'course-detail' + slug,
 		() => getCourseDetail(slug)
 	);
 
 	const courseID = computed(() => unref(data)?.['id'])
 	useCanBuyProvider(courseID)
-
-	return { data, pending };
+	
+	return { data, pending, error };
 };

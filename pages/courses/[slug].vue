@@ -14,6 +14,9 @@
 			class="mt-3"
 		/>
 	</div>
+	<div v-else-if="error" class="alert alert-error">
+    	خطا: {{ error.message || 'دوره بارگذاری نشد' }}
+  	</div>
 	<div v-else-if="data">
 		<section
 			class="
@@ -27,7 +30,7 @@
 					<img
 						class="w-full h-full"
 						loading="lazy"
-						:src="data['src']"
+						:src="data?.['src']"
 					/>
 				</figure>
 			</div>
@@ -44,11 +47,11 @@
                 "
 			>
 				<h1 class="font-bold prose-2xl text-white">
-					{{ data['title'] }}
+					{{ data?.['title'] }}
 				</h1>
 				<div class="t-row">
 					<div class="badge badge-secondary badge-lg text-xs">
-						{{ data['statusText'] }}
+						{{ data?.['statusText'] }}
 					</div>
 				</div>
 			</div>
@@ -84,7 +87,7 @@
 							{{ CourseTabs[0].label }}
 						</h6>
 						<article>
-							<p v-html="data['short_description']"></p>
+							<p v-html="data?.['short_description']"></p>
 						</article>
 					</div>
 				</div>
@@ -165,7 +168,7 @@
 				</client-only>
 			</section>
 			<aside class="lg:col-span-4 t-col space-y-3">
-				<section class="shadow/20 rounded-box p-4">
+				<section class="rounded-box p-4">
 					<div class="t-row justify-between p-3">
 						<span class="block font-medium prose-sm">قیمت دوره</span>
 						<div class="flex space-x-2">
@@ -182,7 +185,7 @@
 					</div>
 					<div
 						class="t-row justify-between p-3"
-						v-if="true"
+						v-if="data?.['courseDuration']"
 					>
 						<span class="block font-medium prose-sm">مدت زمان دوره</span>
 						<span
@@ -194,7 +197,7 @@
 					</div>
 					<div
 						class="t-row justify-between p-3"
-						v-if="true"
+						v-if="data?.['computedEstimateDuration']"
 					>
 						<span class="block font-medium prose-sm">
 							مدت زمان تقریبی دوره
@@ -203,17 +206,20 @@
 					</div>
 					<div
 						class="t-row justify-between p-3"
-						v-if="true"
+						v-if="data?.['totalVideoCount']"
 					>
 						<span class="block font-medium prose-sm">تعداد قسمت‌ها</span>
-						<span class="block"> 70 </span>
+						<span class="block"> {{ data['totalVideoCount'] }} </span>
 					</div>
-					<div class="t-row justify-between p-3">
+					<div
+						class="t-row justify-between p-3"
+						v-if="data?.['userCounter']"
+					>
 						<span class="block font-medium prose-sm">تعداد شرکت کنندگان</span>
-						<span class="block"> 120 </span>
+						<span class="block"> {{ data['userCounter'] }} </span>
 					</div>
 					<client-only>
-						پرداخت
+						<CoursePayButton :course-id="data['id']" />
 					</client-only>
 				</section>
 
@@ -256,8 +262,7 @@ const { open: openLoginDialog } = useLoginDialog();
 const authStore = useAuthStore();
 
 const route = useRoute()
-
-const { data, pending } = useCourseDetail(route.params.slug as string)
+const { data, pending, error } = useCourseDetail(route.params.slug as string)
 
 const showAmount = computed(() => data.value?.['amountOff'] !== data.value?.['amount'])
 const getAmount = computed(() => {
