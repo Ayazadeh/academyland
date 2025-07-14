@@ -14,7 +14,7 @@ import { ButtonVariantEnum } from "@/types"
 import { BASE_URL } from "~/composables/api/api.config";
 import { useAuthStore } from "~/composables/auth/Auth.store";
 import { useCanBuyConsumer } from "~/composables/course/useCourseDetail";
-import qs from 'querystring'
+import qs from 'qs'
 
 const props = defineProps<{
 	courseId: number;
@@ -22,19 +22,16 @@ const props = defineProps<{
 
 const canBuy = useCanBuyConsumer();
 const authStore = useAuthStore();
+
 const getTarget = computed(() => {
-	return (
-		BASE_URL + '/site/request?' +
-		qs.stringify(
-			{
-				key: authStore.getToken,
-				course_id: props.courseId
-			}
-		)
-	)
+	const query = qs.stringify({
+		key: authStore.getToken,
+		course_id: props.courseId
+	})
+	return `${BASE_URL}/site/request?${query}`
 })
 
 const payClick = () => {
-	window.location.assign(unref(getTarget))
+	navigateTo(getTarget.value, { external: true })
 }
 </script>
