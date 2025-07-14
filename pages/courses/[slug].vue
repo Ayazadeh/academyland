@@ -14,9 +14,12 @@
 			class="mt-3"
 		/>
 	</div>
-	<div v-else-if="error" class="alert alert-error">
-    	خطا: {{ error.message || 'دوره بارگذاری نشد' }}
-  	</div>
+	<div
+		v-else-if="error"
+		class="alert alert-error"
+	>
+		خطا: {{ error.message || 'دوره بارگذاری نشد' }}
+	</div>
 	<div v-else-if="data">
 		<section
 			class="
@@ -113,10 +116,12 @@
 						>
 							{{ CourseTabs[2].label }}
 						</h6>
-						<template v-if="true">
-							<div v-for="chapter in data['courseChapters']">
-								{{ chapter.chapterName }}
-							</div>
+						<template v-if="hasChapter">
+							<CourseChapterItem
+								v-for="item in data?.['courseChapters']"
+								:item="item"
+								:key="`chapter-${item.id}`"
+							/>
 						</template>
 						<template v-else>
 							<p>هنوز ویدئویی منتشر نشده است.</p>
@@ -162,7 +167,7 @@
 								</template>
 							</div>
 
-							<div class="h-10">نظرات کاربران در اینجا قرار می‌گیرد</div>
+							<CourseComments :course-id="data['id']" />
 						</div>
 					</div>
 				</client-only>
@@ -271,4 +276,6 @@ const getAmount = computed(() => {
     }
 	return numberFormat(data.value?.['amountOff']) + ' تومان';
 })
+
+const hasChapter = computed(() => data.value?.['courseChapters'])
 </script>

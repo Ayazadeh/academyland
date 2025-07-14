@@ -1,4 +1,6 @@
+import { BASE_URL } from '../api/api.config';
 import { useAuthStore } from '../auth/Auth.store';
+import { CourseVideo } from './courseDetail.dto';
 import { useCourseDetailService, useIsUserInTheCourseService } from './useCourse.service';
 
 type CAN_BUY = { loading: boolean, canBuy: boolean }
@@ -53,3 +55,23 @@ export const useCourseDetail = (slug: string) => {
 	
 	return { data, pending, error };
 };
+
+export const useVideoItem = (item: Ref<CourseVideo>) => {
+	const authStore = useAuthStore();
+	const userCanBuy = inject<CAN_BUY>('canBuy')
+	const isLocked = computed(() => userCanBuy?.canBuy && !unref(item).isDemo)
+
+	const { $qs } = useNuxtApp();
+
+	const getDownloadLink = computed(() => {
+		const query = $qs.stringify({
+			key: authStore.getToken,
+			v: unref(item).id,
+			id: unref(item).course_id
+		})
+
+		return `${BASE_URL}/site/download?${query}`
+	})
+
+	return { isLocked, getDownloadLink }
+}

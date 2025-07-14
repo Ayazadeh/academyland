@@ -1,19 +1,30 @@
 <template>
-    <div
-        :class="{
+	<div
+		:class="{
             'bg-gray-100': isOpen && !noStyle,
             'py-3 px-3.5 t-row justify-between cursor-pointer rounded transition-all lg:hover:bg-gray-200':
             !noStyle,
         }"
-        @click="toggle"
-        v-bind="$attrs"
-    >
-        <slot name="title" :is-open="isOpen" />
-        <div class="mr-3" v-if="withTitleIcon">{{ isOpen ? '-' : '+' }}</div>
-    </div>
-    <div ref="target" class="px-1.5 h-0 overflow-y-hidden">
-        <slot />
-    </div>
+		@click="toggle"
+		v-bind="$attrs"
+	>
+		<slot
+			name="title"
+			:is-open="isOpen"
+		/>
+		<div
+			class="mr-3"
+			v-if="withTitleIcon"
+		>
+			{{ isOpen ? '-' : '+' }}
+		</div>
+	</div>
+	<div
+		ref="target"
+		class="px-1.5 h-0 overflow-y-hidden"
+	>
+		<slot />
+	</div>
 </template>
 
 <script setup lang="ts">

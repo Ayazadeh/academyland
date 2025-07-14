@@ -39,17 +39,27 @@ export class CourseDetailDto extends BaseCourseDto {
 			obj.totalVideoCount = 0;
 			return [];
 		}
+
+		let videoIndex = 0;
+		const videoPerChapter = 4;
         let i = 0;
-        const courseChapters = value.map((chapter) => ({
-			...chapter,
-			courseVideos: Array.isArray(chapter.courseVideos)
-			  ? chapter.courseVideos.map((video: CourseVideo) => {
-				  i++;
-				  return { ...video, rowNumber: i };
-				})
-			  : [],
-		}));
-        obj.totalVideoCount = i;
+
+        const courseChapters = value.map((chapter, chapterIndex) => {
+			const chapterVideos = obj.courseVideos.slice(videoIndex, videoIndex + videoPerChapter)
+				.map((video: CourseVideo, index: number) => ({
+					...video,
+					rowNumber: videoIndex + index + 1,
+				}))
+
+				videoIndex += chapterVideos.length;
+
+				return {
+					...chapter,
+					courseVideos: chapterVideos
+				}
+		});
+
+        obj.totalVideoCount = videoIndex;
         return courseChapters;
     }, { toClassOnly: true })
     courseChapters: CourseChapter[];

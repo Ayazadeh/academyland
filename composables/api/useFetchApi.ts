@@ -51,7 +51,9 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 				const transformed = plainToInstance(classTransformer, response, {
 					excludeExtraneousValues: true,
 				});
-				return instanceToPlain(transformed) as unknown as R;
+				return instanceToPlain(transformed, {
+					excludeExtraneousValues: true,
+				}) as unknown as R;
 			}
 
 			return response;
