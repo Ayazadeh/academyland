@@ -32,7 +32,7 @@
 			>
 				<section class="t-row mr-4 text-gray-500">
 					<div class="hidden sm:block">
-						<ReplyIcon class="w-7 h-7 ml-4" />
+						<ArrowUturnLeftIcon class="w-5 h-5 ml-4" />
 					</div>
 					<p class="font-medium">
 						{{ child.comment }}
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { UserIcon } from '@heroicons/vue/24/outline';
+import { UserIcon, ArrowUturnLeftIcon } from '@heroicons/vue/24/outline';
 import { useCourseComments } from '~/composables/course/courseComments/useCourseComments'
 
 const props = defineProps<{
