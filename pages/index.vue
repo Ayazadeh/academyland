@@ -69,7 +69,7 @@
 		</h6>
 		<div v-if="pending">Loading...</div>
 		<div
-			v-else-if="!pending && data.length === 0"
+			v-else-if="!pending && data?.length === 0"
 			role="alert"
 			class="alert alert-error w-11/12 mx-auto"
 		>
