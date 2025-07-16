@@ -6,7 +6,7 @@
             <slot />
         </main>
 
-        <foot>footer from default layout</foot er>
+        <footer>footer from default layout</footer>
     </section>
 </template>
 
