@@ -264,6 +264,17 @@ import { useCourseDetail } from '~/composables/course/useCourseDetail';
 import { SkeletonTypes } from '~/components/AppSkeleton/Skeleton.enum';
 import { numberFormat } from '~/helpers/formatHelper';
 
+// title
+useHead({
+	title: computed(() => unref(data)?.['title'] || ''),
+	meta: [
+		{
+			name: 'description',
+			content: computed(() => unref(data)?.['meta_description'] || '')
+		}
+	]
+})
+
 const { open: openLoginDialog } = useLoginDialog();
 
 const authStore = useAuthStore();

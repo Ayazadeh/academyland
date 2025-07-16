@@ -40,6 +40,10 @@
 import { UserIcon } from '@heroicons/vue/24/outline';
 import { LoginStep } from '~/composables/auth/Auth.enum';
 
+useHead({
+    title: 'احراز هویت'
+})
+
 interface Props {
     isDialog?: boolean;
 }

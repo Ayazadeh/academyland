@@ -111,6 +111,16 @@ import { gsap } from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import { useCourseList } from "~/composables/course/useCourse";
 
+useHead({
+	title: 'آموزش Vue.js - Nuxt.js',
+	meta: [
+		{
+			name: 'description',
+			content: 'آموزش ناکست سه بصورت پروژه محور'
+		}
+	]
+})
+
 const completeAnimation = ref(false);
 
 onMounted(() => {

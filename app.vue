@@ -30,7 +30,7 @@ import { useAuthWrapper } from './composables/auth/useAuthWrapper'
 // title
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk}-acanet` : 'آکادمی لند';
+    return titleChunk ? `${titleChunk} | آکادمی لند` : 'آکادمی لند';
   }
 })
 
