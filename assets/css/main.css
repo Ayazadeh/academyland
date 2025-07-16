@@ -26,6 +26,8 @@
     --mobile-ideal-font-size: 11;
     --mobile-ideal-viewport-width: 375;
     --mobile-current-viewport-width: 100vw;
+    
+    direction: rtl;
 }
 
 html {
@@ -35,7 +37,6 @@ html {
 }
 
 body {
-    direction: rtl;
     @apply text-justify overflow-y-scroll;
 }
 
