@@ -8,7 +8,7 @@
 
 		<template v-if="area">
 			<textarea
-				class="input h-32"
+				class="textarea h-32 w-full"
 				v-bind="$attrs"
 				:name="name"
 				:type="type"
