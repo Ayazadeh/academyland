@@ -4,5 +4,8 @@ export default {
         email: 'ایمیل',
         password: 'رمز عبور',
         username: 'نام کاربری',
+        first_name: 'نام',
+        last_name: 'نام خانوادگی',
+        comment: 'نظر'
     }
 }

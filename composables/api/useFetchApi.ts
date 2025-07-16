@@ -1,25 +1,27 @@
-import { BASE_URL } from "./api.config";
+import { BASE_URL } from './api.config';
 import {
 	plainToInstance,
 	instanceToPlain,
 	type ClassConstructor,
-} from "class-transformer";
-import type { FetchOptions, FetchError } from "ofetch";
-import type { FetchCustomConfig } from "./FetchCustomConfig.interface";
-import { useAuthStore } from "../auth/Auth.store";
+} from 'class-transformer';
+import type { FetchOptions, FetchError } from 'ofetch';
+import type { FetchCustomConfig } from './FetchCustomConfig.interface';
+import { useAuthStore } from '../auth/Auth.store';
 
 type HttpMethod =
-	| "GET"
-	| "HEAD"
-	| "PATCH"
-	| "POST"
-	| "PUT"
-	| "DELETE"
-	| "CONNECT"
-	| "OPTIONS"
-	| "TRACE";
+	| 'GET'
+	| 'HEAD'
+	| 'PATCH'
+	| 'POST'
+	| 'PUT'
+	| 'DELETE'
+	| 'CONNECT'
+	| 'OPTIONS'
+	| 'TRACE';
 
-export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) => {
+export const useFetchApi = <R, T = {}>(
+	classTransformer?: ClassConstructor<T>
+) => {
 	const myCustomFetch = async (
 		url: string,
 		config?: FetchOptions,
@@ -57,16 +59,26 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			}
 
 			return response;
-		} catch (error: any) {
-			customConfig.onError?.(error as FetchError);
+		} catch (e: any) {
+			customConfig.onError?.(e as FetchError);
 
 			if (customConfig.ignoreErrors) {
 				return;
 			}
 
-			if (error.response && error.response.status === 401) {
+			const getvalidationErros = () => {
+				const errors = {} as Record<string, string>;
+				if (e?.response?._data && Array.isArray(e.response._data)) {
+					e.response._data.forEach((item) => {
+						errors[item.field] = item.message;
+					});
+				}
+				return errors;
+			};
+
+			if (e.response && e.response.status === 401) {
 				try {
-					const result = await handleRefreshToken(error, url, config, customConfig);
+					const result = await handleRefreshToken(e, url, config, customConfig);
 					if (result) {
 						return result;
 					}
@@ -76,11 +88,21 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 					throw e;
 				}
 			}
+
+			if (e.response && e.response.status === 422) {
+				if (customConfig.setErrors) {
+					customConfig.setErrors(getvalidationErros());
+				}
+				if (customConfig.onValidationFailed) {
+					customConfig.onValidationFailed(getvalidationErros(), e);
+				}
+				return;
+			}
 		}
 
 		function goToLoginIfYouShould(FetchCustomConfig: FetchCustomConfig) {
 			if (FetchCustomConfig.goToLogin) {
-				router.replace("/auth");
+				router.replace('/auth');
 			}
 		}
 
@@ -91,7 +113,10 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 			customConfig: FetchCustomConfig
 		) {
 			if (!authStore.isLoggedIn) {
-				console.error("send request that needs token while user is not logged in: ", url);
+				console.error(
+					'send request that needs token while user is not logged in: ',
+					url
+				);
 				return new Promise((_, reject) => {
 					reject(error);
 				});
@@ -126,15 +151,15 @@ export const useFetchApi = <R, T = {}>(classTransformer?: ClassConstructor<T>) =
 
 function isValidHttpMethod(method: string): method is HttpMethod {
 	const validMethods: HttpMethod[] = [
-		"GET",
-		"HEAD",
-		"PATCH",
-		"POST",
-		"PUT",
-		"DELETE",
-		"CONNECT",
-		"OPTIONS",
-		"TRACE",
+		'GET',
+		'HEAD',
+		'PATCH',
+		'POST',
+		'PUT',
+		'DELETE',
+		'CONNECT',
+		'OPTIONS',
+		'TRACE',
 	];
 	return validMethods.includes(method.toUpperCase() as HttpMethod);
 }

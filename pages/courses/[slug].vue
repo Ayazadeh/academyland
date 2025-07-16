@@ -154,7 +154,9 @@
 							</h6>
 							<div class="my-3">
 								<template v-if="authStore.isLoggedIn">
-									<div>فرم ثبت نظر در اینجا قرار می‌گیرد</div>
+									<div>
+										<CourseCommentForm :course-id="data?.['id']" />
+									</div>
 								</template>
 								<template v-else>
 									<p

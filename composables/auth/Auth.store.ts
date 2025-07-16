@@ -1,7 +1,7 @@
-import { acceptHMRUpdate, defineStore } from "pinia";
-import type { AuthState, Identity, AuthTokens } from "./Auth.interface";
-import { useIdentityService } from "./identity.service";
-import { useRefreshTokenService } from "./useRefreshToken.service";
+import { acceptHMRUpdate, defineStore } from 'pinia';
+import type { AuthState, Identity, AuthTokens } from './Auth.interface';
+import { useIdentityService } from './identity.service';
+import { useRefreshTokenService } from './useRefreshToken.service';
 
 const defaultState = (): AuthState => ({
 	accessToken: null,
@@ -12,13 +12,13 @@ const defaultState = (): AuthState => ({
 	identity: {} as Identity,
 });
 
-export const useAuthStore = defineStore("auth", () => {
+export const useAuthStore = defineStore('auth', () => {
 	const state = ref<AuthState>(defaultState());
 
 	// getters
 	const isLoggedIn = computed(() => !!state.value.accessToken);
-	const isTokenRefreshSuccess = computed(() => state.value.isRefreshSuccess)
-	const isTokenRefreshing = computed(() => state.value.isRefreshing)
+	const isTokenRefreshSuccess = computed(() => state.value.isRefreshSuccess);
+	const isTokenRefreshing = computed(() => state.value.isRefreshing);
 	const getFullName = computed(() =>
 		state.value.identity.first_name
 			? `${state.value.identity.first_name} ${state.value.identity.last_name}`
@@ -26,15 +26,16 @@ export const useAuthStore = defineStore("auth", () => {
 	);
 	const getToken = computed(() => state.value.accessToken);
 	const getLocalStoreAccessToken = computed(() => {
-		const local = localStorage.getItem("token");
+		const local = localStorage.getItem('token');
 		if (local) {
 			return JSON.parse(local).accessToken;
 		} else {
-			return "";
+			return '';
 		}
 	});
 	const getRefreshToken = computed(() => state.value.refreshToken);
 	const getExpiresIn = computed(() => state.value.expiresIn);
+	const getIdentity = computed(() => state.value.identity);
 
 	// actions
 	const fetchAndSetIdentityIfLoggedIn = async () => {
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore("auth", () => {
 				setIdentity(identity as Identity);
 			}
 		}
-	}
+	};
 
 	const setToken = (
 		{ accessToken, refreshToken, expiresIn }: AuthTokens,
@@ -56,13 +57,13 @@ export const useAuthStore = defineStore("auth", () => {
 		state.value.expiresIn = expiresIn;
 		setLocalStorage &&
 			localStorage.setItem(
-				"token",
+				'token',
 				JSON.stringify({ accessToken, refreshToken, expiresIn })
 			);
 	};
 
 	const initialStateFromLocalStore = () => {
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem('token');
 		if (token) {
 			setToken(JSON.parse(token), false);
 		}
@@ -70,7 +71,7 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const clearStore = (deleteLocalToken = true) => {
 		Object.assign(state.value, defaultState());
-		deleteLocalToken && localStorage.removeItem("token");
+		deleteLocalToken && localStorage.removeItem('token');
 	};
 
 	const setIdentity = (identity: Identity) => {
@@ -87,23 +88,23 @@ export const useAuthStore = defineStore("auth", () => {
 				state.value.isRefreshSuccess = true;
 				return response;
 			}
-			
 		} finally {
 			state.value.isRefreshing = false;
 		}
-	}
+	};
 
 	return {
 		isLoggedIn,
 		isTokenRefreshSuccess,
 		isTokenRefreshing,
 		getFullName,
-        getToken,
-        getLocalStoreAccessToken,
-        getRefreshToken,
-        getExpiresIn,
-        initialStateFromLocalStore,
-        clearStore,
+		getToken,
+		getLocalStoreAccessToken,
+		getRefreshToken,
+		getExpiresIn,
+		getIdentity,
+		initialStateFromLocalStore,
+		clearStore,
 		setIdentity,
 		setToken,
 		fetchAndSetIdentityIfLoggedIn,

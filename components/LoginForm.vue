@@ -34,4 +34,6 @@ const { loading, error, submit } = useLogin();
 const resetPasswordClick = () => {
 	emits("resetPassword");
 };
+
+const { $t } = useNuxtApp();
 </script>

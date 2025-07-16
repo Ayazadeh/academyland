@@ -10,19 +10,19 @@ export const useCourseCommentService = () => {
 	);
 
 	return async (course_id: number) => {
-        try {
-            const response = $fetch('/course-comments/by-course', {
-                params: { course_id, expand: 'children,createdDate' }
-            })
+		try {
+			const response = $fetch('/course-comments/by-course', {
+				params: { course_id, expand: 'children,createdDate' },
+			});
 
-            return response;
-        } catch (e) {
-            console.error('Error in useCourseComment.service: ', e);
-            throw e;
-        }
-    }
+			return response;
+		} catch (e) {
+			console.error('Error in useCourseComment.service: ', e);
+			throw e;
+		}
+	};
 };
-
+ 
 export const useCourseCreateCommentService = () => {
 	const $fetch = useFetchApi();
 	const { courseCommentSchema } = useCourseCommentsValidator();
@@ -30,12 +30,17 @@ export const useCourseCreateCommentService = () => {
 	interface BODY extends BODY_TYPE {
 		course_id: number;
 	}
-	return (body: BODY, customConfig: FetchCustomConfig = {}) =>
-		$fetch(
-			'/course-comments/create',
-			{ method: 'post', body },
-			{ setToken: true, ...customConfig }
-		).then((response) => {
+	return async (body: BODY, customConfig: FetchCustomConfig = {}) => {
+		try {
+			const response = await $fetch(
+				'/course-comments/create',
+				{ method: 'post', body },
+				{ setToken: true, ...customConfig }
+			);
 			return response;
-		});
+		} catch (e) {
+			console.error('Error in useCourseComment.service: ', e);
+			throw e;
+		} 
+	};
 };
