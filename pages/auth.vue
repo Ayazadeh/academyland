@@ -1,7 +1,7 @@
 <template>
     <div
         :class="{
-            'p-4 bg-white rounded-lg shadow mx-3 my-4 sm:mx-auto sm:min-w-xs lg:min-w-sm': !isDialog,
+            'bg-base-300 p-4 rounded-lg shadow mx-3 my-4 sm:mx-auto sm:min-w-xs lg:min-w-sm': !isDialog,
             'px-3': isDialog
         }"
     >
@@ -12,7 +12,7 @@
             v-if="step === LoginStep.login"
             @resetPassword="step = LoginStep.resetPassword"
         />
-        <RegisterForm 
+        <RegisterForm  
             v-else-if="step === LoginStep.register"
         />
         <ResetPasswordForm 
