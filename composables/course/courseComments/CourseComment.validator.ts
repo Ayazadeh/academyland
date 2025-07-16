@@ -12,6 +12,6 @@ export const useCourseCommentsValidator = () => {
 	});
 	return {
 		courseCommentSchema,
-		courseCommentSchemaHasFullName: courseCommentSchemaHasFullName,
+		courseCommentSchemaHasFullName
 	};
 };

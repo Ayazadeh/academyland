@@ -53,7 +53,7 @@ export const useCreateCourseComment = (course_id: Ref<number>) => {
 	);
 
 	const submit = async (
-		body: InferType<typeof courseCommentSchema>,
+		body: any,
 		{ setErrors, resetForm }: FormActions<any>
 	): Promise<void> => {
 		
