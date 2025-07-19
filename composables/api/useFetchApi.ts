@@ -87,9 +87,7 @@ export const useFetchApi = <R, T = {}>(
 					goToLoginIfYouShould(customConfig);
 					throw e;
 				}
-			}
-
-			if (e.response && e.response.status === 422) {
+			} else if (e.response && e.response.status === 422) {
 				if (customConfig.setErrors) {
 					customConfig.setErrors(getvalidationErros());
 				}
@@ -97,6 +95,13 @@ export const useFetchApi = <R, T = {}>(
 					customConfig.onValidationFailed(getvalidationErros(), e);
 				}
 				return;
+			} else {
+				if ((config.method || '').toLowerCase() === 'get' || !config.method) {
+					showError({
+						statusMessage: e?.response?.statusText || 'خطایی رخ داده است.',
+						statusCode: e.response.status || 500,
+					});
+				}
 			}
 		}
 
