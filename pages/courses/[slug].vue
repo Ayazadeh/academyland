@@ -5,20 +5,20 @@
 				class="
 				h-96
 				w-full
-				bg-gray-300
+				bg-base-300
 				"
 			></div>
 		</AppSkeleton>
 		<AppSkeleton
 			:type="SkeletonTypes.ONE_LINE"
-			class="mt-3"
+			class="mt-3 bg-base-300"
 		/>
 	</div>
 	<div
 		v-else-if="error"
 		class="alert alert-error"
 	>
-		خطا: {{ error.message || 'دوره بارگذاری نشد' }}
+		خطا: {{ error?.message || 'دوره بارگذاری نشد' }}
 	</div>
 	<div v-else-if="data">
 		<section
@@ -104,7 +104,7 @@
 						</h6>
 						<div
 							class="h-20"
-							v-html="data['requirements']"
+							v-html="data?.['requirements']"
 						></div>
 					</div>
 				</div>
@@ -137,7 +137,7 @@
 						>
 							{{ CourseTabs[3].label }}
 						</h6>
-						<div v-for="item in data['courseQuestions']">
+						<div v-for="item in data?.['courseQuestions']">
 							{{ item.question }}
 						</div>
 					</div>
@@ -153,7 +153,7 @@
 								{{ CourseTabs[4].label }}
 							</h6>
 							<div class="my-3">
-								<template v-if="authStore.isLoggedIn">
+								<template v-if="isLoggedIn">
 									<div>
 										<CourseCommentForm :course-id="data?.['id']" />
 									</div>
@@ -169,7 +169,7 @@
 								</template>
 							</div>
 
-							<CourseComments :course-id="data['id']" />
+							<CourseComments :course-id="data?.['id']" />
 						</div>
 					</div>
 				</client-only>
@@ -183,7 +183,7 @@
 								class="line-through prose-xs text-gray-600"
 								v-if="showAmount"
 							>
-								{{ numberFormat(data['amount']) }}
+								{{ numberFormat(data?.['amount']) }}
 							</span>
 							<span>
 								{{ getAmount }}
@@ -199,7 +199,7 @@
 							class="block"
 							dir="ltr"
 						>
-							{{ data['courseDuration'] }}
+							{{ data?.['courseDuration'] }}
 						</span>
 					</div>
 					<div
@@ -209,24 +209,24 @@
 						<span class="block font-medium prose-sm">
 							مدت زمان تقریبی دوره
 						</span>
-						<span class="block">{{ data['computedEstimateDuration'] }}</span>
+						<span class="block">{{ data?.['computedEstimateDuration'] }}</span>
 					</div>
 					<div
 						class="t-row justify-between p-3"
 						v-if="data?.['totalVideoCount']"
 					>
 						<span class="block font-medium prose-sm">تعداد قسمت‌ها</span>
-						<span class="block"> {{ data['totalVideoCount'] }} </span>
+						<span class="block"> {{ data?.['totalVideoCount'] }} </span>
 					</div>
 					<div
 						class="t-row justify-between p-3"
 						v-if="data?.['userCounter']"
 					>
 						<span class="block font-medium prose-sm">تعداد شرکت کنندگان</span>
-						<span class="block"> {{ data['userCounter'] }} </span>
+						<span class="block"> {{ data?.['userCounter'] }} </span>
 					</div>
 					<client-only>
-						<CoursePayButton :course-id="data['id']" />
+						<CoursePayButton :course-id="data?.['id']" />
 					</client-only>
 				</section>
 
@@ -264,20 +264,10 @@ import { useCourseDetail } from '~/composables/course/useCourseDetail';
 import { SkeletonTypes } from '~/components/AppSkeleton/Skeleton.enum';
 import { numberFormat } from '~/helpers/formatHelper';
 
-// title
-useHead({
-	title: computed(() => unref(data)?.['title'] || ''),
-	meta: [
-		{
-			name: 'description',
-			content: computed(() => unref(data)?.['meta_description'] || '')
-		}
-	]
-})
-
 const { open: openLoginDialog } = useLoginDialog();
 
 const authStore = useAuthStore();
+const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const route = useRoute()
 const { data, pending, error } = useCourseDetail(route.params.slug as string)
@@ -291,4 +281,15 @@ const getAmount = computed(() => {
 })
 
 const hasChapter = computed(() => data.value?.['courseChapters'])
+
+// title
+useHead({
+	title: computed(() => unref(data)?.['title'] || ''),
+	meta: [
+		{
+			name: 'description',
+			content: computed(() => unref(data)?.['meta_description'] || '')
+		}
+	]
+})
 </script>

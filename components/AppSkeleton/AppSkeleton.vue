@@ -199,7 +199,7 @@ const props = withDefaults(defineProps<{
 })
 
 const shadowClass = computed(() => props.shadow ? 'shadow' : '')
-const borderClass = computed(() => props.border ? 'border border-gray-200' : '')
+const borderClass = computed(() => props.border ? 'border border-base-300' : '')
 const roundedClass = computed(() => props.rounded ? 'rounded-md' : '')
 const roundedSmClass = computed(() => props.rounded ? 'rounded-sm' : '')
 </script>
