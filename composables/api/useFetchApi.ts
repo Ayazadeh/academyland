@@ -7,6 +7,7 @@ import {
 import type { FetchOptions, FetchError } from 'ofetch';
 import type { FetchCustomConfig } from './FetchCustomConfig.interface';
 import { useAuthStore } from '../auth/Auth.store';
+import { ToastEnum } from '~/types';
 
 type HttpMethod =
 	| 'GET'
@@ -22,15 +23,16 @@ type HttpMethod =
 export const useFetchApi = <R, T = {}>(
 	classTransformer?: ClassConstructor<T>
 ) => {
+	const router = useRouter();
+	const { showToast } = useToast();
+
 	const myCustomFetch = async (
 		url: string,
 		config?: FetchOptions,
 		customConfig: FetchCustomConfig = {}
 	) => {
-		const router = useRouter();
-
 		config = { baseURL: BASE_URL, retry: 0, ...config };
-		customConfig = { goToLogin: true, ...customConfig };
+		customConfig = { goToLogin: true, toastError: true, ...customConfig };
 
 		const authStore = useAuthStore();
 		if (customConfig.setToken) {
@@ -49,6 +51,8 @@ export const useFetchApi = <R, T = {}>(
 				method: config.method?.toUpperCase() as HttpMethod,
 			});
 
+			const responseCopy = customConfig.beforeResponse ? customConfig.beforeResponse(response) : response
+
 			if (classTransformer) {
 				const transformed = plainToInstance(classTransformer, response, {
 					excludeExtraneousValues: true,
@@ -60,6 +64,10 @@ export const useFetchApi = <R, T = {}>(
 
 			return response;
 		} catch (e: any) {
+			if (customConfig.debug && import.meta.dev) {
+				throw Error(e)
+			}
+
 			customConfig.onError?.(e as FetchError);
 
 			if (customConfig.ignoreErrors) {
@@ -94,12 +102,24 @@ export const useFetchApi = <R, T = {}>(
 				if (customConfig.onValidationFailed) {
 					customConfig.onValidationFailed(getvalidationErros(), e);
 				}
+				if (customConfig.toastValidationFields) {
+					customConfig.toastValidationFields.forEach((item) => {
+						if (getvalidationErros()[item]) {
+							showToast({ message: getvalidationErros()[item], type: ToastEnum.ERROR })
+						}
+					})
+				}
 				return;
 			} else {
 				if ((config.method || '').toLowerCase() === 'get' || !config.method) {
 					showError({
 						statusMessage: e?.response?.statusText || 'خطایی رخ داده است.',
 						statusCode: e.response.status || 500,
+					});
+				} else if (customConfig.toastError) {
+					showToast({
+						message: e?.response?.statusText || 'خطای دریافت از سرور',
+						type: ToastEnum.ERROR,
 					});
 				}
 			}
