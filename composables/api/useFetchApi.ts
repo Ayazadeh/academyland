@@ -45,16 +45,25 @@ export const useFetchApi = <R, T = {}>(
 			throw new Error(`Invalid HTTP method: ${config.method}`);
 		}
 
+		const { $qs } = useNuxtApp();
+
+		if (config.params) {
+			url = url + '?' + $qs.stringify(config.params);
+			delete config.params;
+		}
+
 		try {
 			const response = await $fetch<R>(url, {
 				...config,
 				method: config.method?.toUpperCase() as HttpMethod,
 			});
 
-			const responseCopy = customConfig.beforeResponse ? customConfig.beforeResponse(response) : response
+			const responseCopy = customConfig.beforeResponse
+				? customConfig.beforeResponse(response)
+				: response;
 
 			if (classTransformer) {
-				const transformed = plainToInstance(classTransformer, response, {
+				const transformed = plainToInstance(classTransformer, responseCopy, {
 					excludeExtraneousValues: true,
 				});
 				return instanceToPlain(transformed, {
@@ -65,7 +74,7 @@ export const useFetchApi = <R, T = {}>(
 			return response;
 		} catch (e: any) {
 			if (customConfig.debug && import.meta.dev) {
-				throw Error(e)
+				throw Error(e);
 			}
 
 			customConfig.onError?.(e as FetchError);
@@ -105,9 +114,12 @@ export const useFetchApi = <R, T = {}>(
 				if (customConfig.toastValidationFields) {
 					customConfig.toastValidationFields.forEach((item) => {
 						if (getvalidationErros()[item]) {
-							showToast({ message: getvalidationErros()[item], type: ToastEnum.ERROR })
+							showToast({
+								message: getvalidationErros()[item],
+								type: ToastEnum.ERROR,
+							});
 						}
-					})
+					});
 				}
 				return;
 			} else {
