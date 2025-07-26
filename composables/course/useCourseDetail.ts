@@ -53,7 +53,7 @@ export const useCourseDetail = (slug: string) => {
 	const getCourseDetail = useCourseDetailService();
 	const { data, pending, error } = useLazyAsyncData(
 		'course-detail' + slug,
-		() => getCourseDetail(slug + 1)
+		() => getCourseDetail(slug)
 	);
 
 	const courseID = computed(() => unref(data)?.['id']);
