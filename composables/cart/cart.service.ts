@@ -25,7 +25,7 @@ export const useCartListService = () => {
 		);
 	};
 	const listWhenNotLoggedIn = (ids: number[]) => {
-		return fetchData('/card/course-by-id', {
+		return fetchData('/cart/course-by-id', {
 			params: { id: ids, expand: 'src, statusText, isRecording, percent' },
 		});
 	};
