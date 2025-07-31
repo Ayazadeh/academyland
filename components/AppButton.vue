@@ -1,8 +1,11 @@
 <template>
-    <button :class="{ [`btn btn-soft btn-${variant}`]: variant !== undefined }">
-        <span v-if="loading" class="loading loading-spinner"></span>
-        <slot></slot>
-    </button>
+	<button :class="{ [`btn btn-soft btn-${variant}`]: variant !== undefined }">
+		<span
+			v-if="loading"
+			class="loading loading-spinner"
+		></span>
+		<slot></slot>
+	</button>
 </template>
 
 <script setup lang="ts">
@@ -13,7 +16,7 @@ interface Props {
     loading?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
     loading: false
 })
 </script>

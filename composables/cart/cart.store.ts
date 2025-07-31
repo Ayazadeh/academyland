@@ -6,7 +6,6 @@ import { ToastEnum } from '~/types';
 
 const defaultState = () => ({
 	data: [] as unknown as CartDto[],
-	adding: false,
 	fetching: false,
 });
 
@@ -19,7 +18,7 @@ export const useCartStore = defineStore('cart', () => {
 		return data ? JSON.parse(data) : [];
 	});
 
-	const fetchCart = async () => {
+	const fetchCart = async (): Promise<any> => {
 		state.value.fetching = true;
 		if (import.meta.server) {
 			throw Error('call fetchCart on server');
@@ -62,11 +61,10 @@ export const useCartStore = defineStore('cart', () => {
 		return state.value.data.findIndex((item) => item.id === id) != -1;
 	};
 
-	const addToCart = async (id: number) => {
+	const addToCart = async (id: number): Promise<any> => {
 		const authStore = useAuthStore();
 		const addToCart = useAddToCartService();
 		if (authStore.isLoggedIn) {
-			state.value.adding = true;
 			try {
 				const response = await addToCart(id);
 				if (response) {
@@ -75,8 +73,6 @@ export const useCartStore = defineStore('cart', () => {
 			} catch (e) {
 				console.error('Error in cart.store.ts 3: ', e);
 				throw e;
-			} finally {
-				state.value.adding = false;
 			}
 		} else {
 			const ids = getLocalIds.value;
@@ -87,7 +83,6 @@ export const useCartStore = defineStore('cart', () => {
 					message: 'این دوره در سبد خرید شما موجود است',
 					type: ToastEnum.ERROR,
 				});
-				return;
 			}
 
 			ids.push(id);
@@ -97,8 +92,11 @@ export const useCartStore = defineStore('cart', () => {
 	};
 
 	const syncIdsToStorage = () => {
-		localStorage.setItem('cart', JSON.stringify(state.value.data.map((item) => item.id)))
-	}
+		localStorage.setItem(
+			'cart',
+			JSON.stringify(state.value.data.map((item) => item.id))
+		);
+	};
 
 	return {
 		...toRefs(state.value),

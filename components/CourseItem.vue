@@ -9,9 +9,15 @@
 	>
 		<div class="card border-1 border-black/10 text-accent-content h-full">
 			<div class="aspect-[2/1] bg-gray-100 shadow-sm border-b relative">
-				<div class="absolute inset-x-2 top-2" v-if="item.percent">
+				<div
+					class="absolute inset-x-2 top-2"
+					v-if="item.percent"
+				>
 					<div class="t-row justify-between">
-						<small class="text-secondary" v-if="item.isRecording">
+						<small
+							class="text-secondary"
+							v-if="item.isRecording"
+						>
 							تخفیف حین ضبط دوره
 						</small>
 						<div v-else></div>
@@ -21,43 +27,45 @@
 				<figure class="overflow-hidden">
 					<img
 						class="w-full h-full transition duration-500 transform-gpu group-hover:opacity-90 group-hover:scale-105"
-                        loading="lazy"
-                        :src="item.src"
-                        :alt="item.title"
+						loading="lazy"
+						:src="item.src"
+						:alt="item.title"
 					/>
 				</figure>
 			</div>
-            
-            <div class="card-body flex flex-col bg-base-100 text-base-content">
-                <h3 class="line-clamp-2 min-h-14 card-title prose-sm group-hover:text-primary transition">
-                    {{ item.title }}
-                </h3>
 
-                <div class="min-h-[6rem] flex-grow">
-                    <p class="prose-xs line-clamp-4">
-                        {{ item.short_description }}
-                    </p>
-                </div>
+			<div class="card-body flex flex-col bg-base-100 text-base-content">
+				<h3
+					class="line-clamp-2 min-h-14 card-title prose-sm group-hover:text-primary transition"
+				>
+					{{ item.title }}
+				</h3>
 
-                <div class="flex items-center justify-between mt-3">
-                    <div class="prose-xs 3xl:prose-2xs text-secondary">
-                        {{ item.statusText }}
-                    </div>
-                    <div class="prose-xs 3xl:prose-2xs">
-                        <div class="t-row gap-x-3 space-x-reverse">
-                            <span
-                                v-if="item.showAmount"
-                                class="line-through prose-xs text-gray-600"
-                            >
-                                {{ numberFormat(item.amount) }}
-                            </span>
-                            <span>
-                                {{ getAmount }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+				<div class="min-h-[6rem] flex-grow">
+					<p class="prose-xs line-clamp-4">
+						{{ item.short_description }}
+					</p>
+				</div>
+
+				<div class="flex items-center justify-between mt-3">
+					<div class="prose-xs 3xl:prose-2xs text-secondary">
+						<AddToCartButton :id="item.id" />
+					</div>
+					<div class="prose-xs 3xl:prose-2xs">
+						<div class="t-row gap-x-3 space-x-reverse">
+							<span
+								v-if="item.showAmount"
+								class="line-through prose-xs text-gray-600"
+							>
+								{{ numberFormat(item.amount) }}
+							</span>
+							<span>
+								{{ getAmount }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</nuxt-link>
 </template>
