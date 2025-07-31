@@ -91,11 +91,11 @@ const links = [
 	},
 	{
 		title: 'دوره‌های آموزشی',
-		to: '/',
+		to: '/courses',
 	},
 	{
 		title: 'مقالات',
-		to: '/',
+		to: '/articles',
 	},
 	{
 		title: 'درباره آکادمی لند',
