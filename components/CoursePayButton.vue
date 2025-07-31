@@ -14,6 +14,7 @@ import { ButtonVariantEnum } from "@/types"
 import { BASE_URL } from "~/composables/api/api.config";
 import { useAuthStore } from "~/composables/auth/Auth.store";
 import { useCanBuyConsumer } from "~/composables/course/useCourseDetail";
+import qs from 'qs'
 
 const props = defineProps<{
 	courseId: number;
@@ -22,9 +23,8 @@ const props = defineProps<{
 const canBuy = useCanBuyConsumer();
 const authStore = useAuthStore();
 
-const { $qs } = useNuxtApp()
 const getTarget = computed(() => {
-	const query = $qs.stringify({
+	const query = qs.stringify({
 		key: authStore.getToken,
 		course_id: props.courseId
 	})

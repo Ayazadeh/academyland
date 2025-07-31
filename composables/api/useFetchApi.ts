@@ -8,6 +8,7 @@ import type { FetchOptions, FetchError } from 'ofetch';
 import type { FetchCustomConfig } from './FetchCustomConfig.interface';
 import { useAuthStore } from '../auth/Auth.store';
 import { ToastEnum } from '~/types';
+import qs from 'qs'
 
 type HttpMethod =
 	| 'GET'
@@ -45,10 +46,8 @@ export const useFetchApi = <R, T = {}>(
 			throw new Error(`Invalid HTTP method: ${config.method}`);
 		}
 
-		const { $qs } = useNuxtApp();
-
-		if (config.params) {
-			url = url + '?' + $qs.stringify(config.params);
+		if (config.params && Object.keys(config.params).length) {
+			url = url + '?' + qs.stringify(config.params, { arrayFormat: 'brackets' });
 			delete config.params;
 		}
 

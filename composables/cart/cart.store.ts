@@ -33,7 +33,7 @@ export const useCartStore = defineStore('cart', () => {
 					state.value.data = response as unknown as CartDto[];
 				}
 			} catch (e) {
-				console.error('Error in cart.store.ts1: ', e);
+				console.error('Error in cart.store.ts 1: ', e);
 				throw e;
 			} finally {
 				state.value.fetching = false;
@@ -47,7 +47,7 @@ export const useCartStore = defineStore('cart', () => {
 						state.value.data = response as unknown as CartDto[];
 					}
 				} catch (e) {
-					console.error('Error in cart.store.ts2', e);
+					console.error('Error in cart.store.ts 2', e);
 					throw e;
 				} finally {
 					state.value.fetching = false;
@@ -73,7 +73,7 @@ export const useCartStore = defineStore('cart', () => {
 					state.value.data = response as unknown as CartDto[];
 				}
 			} catch (e) {
-				console.error('Error in cart.store.ts3: ', e);
+				console.error('Error in cart.store.ts 3: ', e);
 				throw e;
 			} finally {
 				state.value.adding = false;

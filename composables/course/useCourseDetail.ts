@@ -5,6 +5,7 @@ import {
 	useCourseDetailService,
 	useIsUserInTheCourseService,
 } from './useCourse.service';
+import qs from 'qs'
 
 type CAN_BUY = { loading: boolean; canBuy: boolean };
 
@@ -67,10 +68,8 @@ export const useVideoItem = (item: Ref<CourseVideo>) => {
 	const userCanBuy = inject<CAN_BUY>('canBuy');
 	const isLocked = computed(() => userCanBuy?.canBuy && !unref(item).isDemo);
 
-	const { $qs } = useNuxtApp();
-
 	const getDownloadLink = computed(() => {
-		const query = $qs.stringify({
+		const query = qs.stringify({
 			key: authStore.getToken,
 			v: unref(item).id,
 			id: unref(item).course_id,
