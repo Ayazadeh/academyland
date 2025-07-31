@@ -6,7 +6,7 @@
             <slot />
         </main>
 
-        <footer>footer from default layout</footer>
+        <footer class="text-center text-xs fixed bottom-0 w-full bg-base-200">طراحی و توسعه توسط محمد ایازاده</footer>
     </section>
 </template>
 
