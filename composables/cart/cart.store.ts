@@ -18,10 +18,12 @@ export const useCartStore = defineStore('cart', () => {
 	const state = ref(defaultState());
 
 	const getCartCount = computed(() => state.value.data.length);
-	const getLocalIds = computed(() => {
+	const getCartIDs = computed(() => state.value.data.map((item) => item.id));
+
+	const getLocalIds = () => {
 		const data = localStorage.getItem('cart');
 		return data ? JSON.parse(data) : [];
-	});
+	};
 
 	const fetchCart = async (): Promise<any> => {
 		state.value.fetching = true;
@@ -44,7 +46,7 @@ export const useCartStore = defineStore('cart', () => {
 				state.value.fetchedOnce = true;
 			}
 		} else {
-			const ids = getLocalIds.value;
+			const ids = getLocalIds();
 			if (ids.length) {
 				try {
 					const response = await listWhenNotLoggedIn(ids);
@@ -56,9 +58,11 @@ export const useCartStore = defineStore('cart', () => {
 					throw e;
 				} finally {
 					state.value.fetching = false;
+					state.value.fetchedOnce = true;
 				}
 			} else {
 				state.value.fetching = false;
+				state.value.fetchedOnce = true;
 			}
 		}
 	};
@@ -81,7 +85,7 @@ export const useCartStore = defineStore('cart', () => {
 				throw e;
 			}
 		} else {
-			const ids = getLocalIds.value;
+			const ids = getLocalIds();
 			const { showToast } = useToast();
 
 			if (isExistInTheCart(id)) {
@@ -119,6 +123,7 @@ export const useCartStore = defineStore('cart', () => {
 	return {
 		...toRefs(state.value),
 		getCartCount,
+		getCartIDs,
 		fetchCart,
 		addToCart,
 		syncIdsToStorage,

@@ -1,19 +1,19 @@
 <template>
-		<div
-			id="the-menu"
-			class="navbar t-row justify-between px-10 3xl:text-sm shadow-lg bg-base-100 z-40"
-		>
-			<section class="t-row">
-				<button
-					class="lg:hidden block"
-					@click="toggleMenu"
-				>
-					<Bars3Icon class="w-8" />
-				</button>
-				<div
-					ref="target"
-					v-bind="$attrs"
-					class="
+	<div
+		id="the-menu"
+		class="navbar t-row justify-between px-10 3xl:text-sm shadow-lg bg-base-100 z-40"
+	>
+		<section class="t-row">
+			<button
+				class="lg:hidden block"
+				@click="toggleMenu"
+			>
+				<Bars3Icon class="w-8" />
+			</button>
+			<div
+				ref="target"
+				v-bind="$attrs"
+				class="
 					invisible 
 					opacity-0 
 					top-10 
@@ -40,49 +40,56 @@
 					lg:mt-0
 					lg:inset-0
 					"
-				>
-					<router-link
-						v-for="(item, index) in links"
-						:key="`menu-${index}`"
-						:to="item.to"
-						class="w-full lg:w-auto py-3 pr-4 cursor-pointer"
-					>
-						{{ item.title }}
-					</router-link>
-				</div>
-			</section>
-
-			<section class="t-row">
-				<client-only>
-					<button
-						class="btn btn-link no-animation lg:ml-4"
-						@click="() => open()"
-						v-if="!authStore.isLoggedIn"
-					>
-						ورود / ثبت نام
-					</button>
-					<template v-else>
-						<TheMenuAuth />
-					</template>
-				</client-only>
-
+			>
 				<router-link
-					class="!text-gray-600 font-bold"
-					to="/"
+					v-for="(item, index) in links"
+					:key="`menu-${index}`"
+					:to="item.to"
+					class="w-full lg:w-auto py-3 pr-4 cursor-pointer"
 				>
-					آکادمی لند
+					{{ item.title }}
 				</router-link>
-			</section>
-		</div>
+			</div>
+		</section>
+
+		<section class="t-row">
+			<client-only>
+				<button
+					class="btn btn-link no-animation lg:ml-4"
+					@click="() => open()"
+					v-if="!authStore.isLoggedIn"
+				>
+					ورود / ثبت نام
+				</button>
+				<template v-else>
+					<TheMenuAuth />
+				</template>
+
+				<template v-if="cartStore.fetchedOnce && cartStore.getCartCount > 0">
+					{{ cartStore.getCartCount }}
+				</template>
+			</client-only>
+
+			<router-link
+				class="!text-gray-600 font-bold"
+				to="/"
+			>
+				آکادمی لند
+			</router-link>
+		</section>
+	</div>
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '~/composables/auth/Auth.store';
 import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
 import { Bars3Icon } from '@heroicons/vue/24/outline';
+import { useCartStore } from '~/composables/cart/cart.store';
 
 const authStore = useAuthStore();
 const { open } = useLoginDialog();
+
+const cartStore = useCartStore();
 
 const links = [
 	{

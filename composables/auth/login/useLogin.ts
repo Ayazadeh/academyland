@@ -2,6 +2,7 @@ import { ToastEnum } from "~/types";
 import { useAuthStore } from "../Auth.store";
 import { useLoginService } from "./login.service";
 import { useLoginDialog } from "./useLoginDialog";
+import { useCartStore } from "~/composables/cart/cart.store";
 
 export const useLogin = () => {
 	const loading = ref(false);
@@ -11,6 +12,7 @@ export const useLogin = () => {
 	const { showToast } = useToast();
 	const router = useRouter();
 	const store = useAuthStore();
+	// const cartStore = useCartStore(); // when use is not logged in and adds to cart we must send cart with login
 
 	const onError = (e) => {
 		if (e?.response?.status == 401) {
