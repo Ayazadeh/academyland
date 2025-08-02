@@ -49,7 +49,12 @@
 
 				<div class="flex items-center justify-between mt-3">
 					<div class="prose-xs 3xl:prose-2xs text-secondary">
-						<AddToCartButton :id="item.id" />
+						<client-only>
+							<template v-if="cartStore.fetchedOnce">
+								<AddToCartButton v-if="!cartStore.isExistInTheCart(item.id)" :id="item.id" />
+								<DeleteFromCart v-else :id="item.id" />
+							</template>
+						</client-only>
 					</div>
 					<div class="prose-xs 3xl:prose-2xs">
 						<div class="t-row gap-x-3 space-x-reverse">
@@ -74,6 +79,7 @@
 import { computed } from 'vue'
 import { numberFormat } from '~/helpers/formatHelper';
 import { CourseDto } from '~/composables/course/course.dto';
+import { useCartStore } from '~/composables/cart/cart.store';
 
 interface Props {
     item: CourseDto;
@@ -83,6 +89,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     hasDefaultWidth: true,
 });
+
+const cartStore = useCartStore();
 
 const to = computed(() => ({
     name: 'courses-slug',

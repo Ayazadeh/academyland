@@ -1,12 +1,17 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
 import { CartDto } from './cart.dto';
 import { useAuthStore } from '../auth/Auth.store';
-import { useCartListService, useAddToCartService } from './cart.service';
+import {
+	useCartListService,
+	useAddToCartService,
+	useDeleteCartService,
+} from './cart.service';
 import { ToastEnum } from '~/types';
 
 const defaultState = () => ({
 	data: [] as unknown as CartDto[],
 	fetching: false,
+	fetchedOnce: false,
 });
 
 export const useCartStore = defineStore('cart', () => {
@@ -36,6 +41,7 @@ export const useCartStore = defineStore('cart', () => {
 				throw e;
 			} finally {
 				state.value.fetching = false;
+				state.value.fetchedOnce = true;
 			}
 		} else {
 			const ids = getLocalIds.value;
@@ -91,6 +97,18 @@ export const useCartStore = defineStore('cart', () => {
 		}
 	};
 
+	const deleteFromCart = async (id: number): Promise<any> => {
+		const authStore = useAuthStore();
+		const deleteFromCartService = useDeleteCartService();
+		if (authStore.isLoggedIn) {
+			await deleteFromCartService(id);
+		}
+		state.value.data = state.value.data.filter((item) => item.id !== id);
+		return new Promise((resolve) => {
+			resolve(true);
+		});
+	};
+
 	const syncIdsToStorage = () => {
 		localStorage.setItem(
 			'cart',
@@ -104,6 +122,8 @@ export const useCartStore = defineStore('cart', () => {
 		fetchCart,
 		addToCart,
 		syncIdsToStorage,
+		deleteFromCart,
+		isExistInTheCart,
 	};
 });
 

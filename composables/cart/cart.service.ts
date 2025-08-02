@@ -53,9 +53,13 @@ export const useAddToCartService = () => {
 export const useDeleteCartService = () => {
 	const fetchData = useFetchApi<boolean>();
 	return (course_id: number) => {
-		return fetchData('/cart/delete', {
-			params: { course_id },
-			method: 'delete',
-		});
+		return fetchData(
+			'/cart/delete',
+			{
+				params: { course_id },
+				method: 'delete',
+			},
+			{ setToken: true, ignoreErrors: true }
+		);
 	};
 };
