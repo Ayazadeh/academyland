@@ -65,9 +65,20 @@
 					<TheMenuAuth />
 				</template>
 
-				<template v-if="cartStore.fetchedOnce && cartStore.getCartCount > 0">
-					{{ cartStore.getCartCount }}
-				</template>
+				<div class="indicator">
+					<router-link
+						to="/cart"
+						class="p-1"
+					>
+						<ShoppingCartIcon class="w-6 h-6" />
+					</router-link>
+					<span
+						v-if="cartStore.fetchedOnce && cartStore.getCartCount > 0"
+						class="badge badge-xs indicator-item badge-primary"
+					>
+						{{ cartStore.getCartCount }}
+					</span>
+				</div>
 			</client-only>
 
 			<router-link
@@ -83,7 +94,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/composables/auth/Auth.store';
 import { useLoginDialog } from '~/composables/auth/login/useLoginDialog';
-import { Bars3Icon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, ShoppingCartIcon } from '@heroicons/vue/24/outline';
 import { useCartStore } from '~/composables/cart/cart.store';
 
 const authStore = useAuthStore();
