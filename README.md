@@ -115,7 +115,3 @@ This project uses Plop for generating custom validators:
 yarn g # or npm run g
 ```
 Follow the prompts to generate new validator modules.
-
-## License
-
-This project is for educational/demo purposes. Please add your own license as needed.
