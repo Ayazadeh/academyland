@@ -16,4 +16,7 @@ export default defineNuxtConfig({
 		typeCheck: true,
 	},
 	modules: ['@pinia/nuxt'],
+	extends: [
+		'../nuxt-layer'
+	]
 });
