@@ -22,7 +22,7 @@
         <div 
             class="py-2.5 text-center"
             :class="{
-                't-center absolute bottom-0 inset-x-0 bg-gray-100': isDialog
+                't-center absolute bottom-0 inset-x-0': isDialog
             }"
         >
             <div
