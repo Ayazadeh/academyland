@@ -9,7 +9,7 @@
             <div 
                 role="button"
                 class="cursor-pointer"
-                :class="{ 'text-primary': item.index === activeItemIndex }"
+                :class="{ 'text-primary': item === items[activeItemIndex] }"
                 @click="scrollToID(item.id)"
             >
                 {{ item.label }}
