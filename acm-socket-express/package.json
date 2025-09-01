@@ -1,0 +1,11 @@
+{
+  "name": "acm-socket-express",
+  "version": "1.0.0",
+  "description": "academyland socket course",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}
