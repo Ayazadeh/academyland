@@ -1,10 +1,17 @@
 import { io } from "socket.io-client";
 export default defineNuxtPlugin((nuxtApp) => {
-	const socket = io("http://localhost:3001");
+	let socket = io("http://localhost:3001");
+	
+	const createConnectionWithToken = (token: string) => {
+		socket.disconnect();
+		socket = io("http://localhost:3001", { auth: { token } });
+	};
+
 	return {
 		provide: {
 			socket: {
 				io: socket,
+				createConnectionWithToken,
 			},
 		},
 	};
